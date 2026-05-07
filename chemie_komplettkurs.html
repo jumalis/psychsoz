@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chemie Komplettkurs — MHH Vorklinik 2021–2025</title>
+<style>
+:root {
+  --bg: #f7f6f2; --card: #ffffff; --border: #e0ddd6;
+  --text: #1a1a18; --muted: #6b6a65;
+  --green: #1D9E75; --green-light: #D1FAE5; --green-dark: #065f46;
+  --blue: #185FA5; --blue-light: #DBEAFE;
+  --red-light: #FAECE7; --red-dark: #4A1B0C;
+  --ok-bg: #D1FAE5; --ok-text: #065f46;
+  --no-bg: #FEE2E2; --no-text: #7F1D1D;
+  --tag-bg: #f0efe9;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Georgia', serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+header { padding: 24px 28px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+header .sub { font-size: 12px; color: var(--muted); font-family: sans-serif; }
+
+.block-tabs { display: flex; padding: 14px 28px 0; border-bottom: 1px solid var(--border); overflow-x: auto; gap: 0; }
+.tab { padding: 7px 16px; font-size: 13px; font-family: sans-serif; cursor: pointer; white-space: nowrap; border: 1px solid var(--border); border-bottom: none; border-radius: 6px 6px 0 0; background: var(--tag-bg); color: var(--muted); transition: all .15s; flex-shrink: 0; }
+.tab.active { background: var(--card); color: var(--text); font-weight: 600; }
+.tab:hover:not(.active) { background: #ebebea; }
+
+.nav-row { display: flex; align-items: center; gap: 10px; padding: 14px 28px 6px; }
+.nav-btn { font-family: sans-serif; font-size: 13px; padding: 6px 16px; border: 1px solid var(--border); border-radius: 6px; background: var(--card); cursor: pointer; transition: background .15s; }
+.nav-btn:hover:not(:disabled) { background: var(--tag-bg); }
+.nav-btn:disabled { opacity: .35; cursor: default; }
+.nav-info { flex: 1; text-align: center; font-size: 12px; font-family: sans-serif; color: var(--muted); }
+
+.dots { display: flex; gap: 5px; justify-content: center; padding: 4px 28px 0; flex-wrap: wrap; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--border); cursor: pointer; transition: background .2s; flex-shrink: 0; }
+.dot.on { background: var(--green); }
+
+main { padding: 16px 28px 48px; max-width: 900px; }
+
+.block-badge { font-family: sans-serif; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 4px; display: inline-block; margin-bottom: 12px; }
+.b1 { background: var(--green-light); color: var(--green-dark); }
+.b2 { background: var(--blue-light); color: var(--blue); }
+.b3 { background: #EDE9FE; color: #4C1D95; }
+.b4 { background: #FEF3C7; color: #78350F; }
+
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+.topic-badge { font-family: sans-serif; font-size: 12px; font-weight: 700; padding: 4px 11px; border-radius: 5px; }
+.years { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+.ytag { font-family: sans-serif; font-size: 10px; padding: 2px 6px; border-radius: 3px; background: var(--tag-bg); color: var(--muted); }
+
+.sl { font-family: sans-serif; font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; }
+.merksatz { background: #f9f8f4; border-left: 3px solid var(--green); border-radius: 0 8px 8px 0; padding: 12px 14px; font-size: 13.5px; line-height: 1.72; margin-bottom: 14px; }
+.merksatz strong { font-weight: 700; }
+
+.var-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.vc { border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+.vy { font-family: sans-serif; font-size: 10px; font-weight: 700; color: var(--muted); margin-bottom: 3px; }
+.vq { font-family: sans-serif; font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 7px; line-height: 1.45; font-style: italic; background: var(--tag-bg); padding: 6px 8px; border-radius: 5px; border-left: 2px solid var(--border); }
+.opt { display: flex; gap: 5px; font-family: sans-serif; font-size: 12px; line-height: 1.35; padding: 3px 6px; border-radius: 4px; margin-bottom: 2px; align-items: flex-start; }
+.opt.ok { color: var(--ok-text); font-weight: 600; background: var(--ok-bg); }
+.opt.no { color: var(--no-text); background: var(--no-bg); text-decoration: line-through; text-decoration-color: #FCA5A5; }
+.opt-l { min-width: 20px; flex-shrink: 0; font-weight: 700; }
+
+.patterns { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.ptag { font-family: sans-serif; font-size: 11px; padding: 3px 8px; border-radius: 4px; background: var(--blue-light); color: var(--blue); }
+
+.trap { background: var(--red-light); border-radius: 8px; padding: 10px 12px; font-family: sans-serif; font-size: 12px; color: var(--red-dark); line-height: 1.55; }
+.trap strong { font-weight: 700; }
+
+@media (max-width: 580px) {
+  .var-grid { grid-template-columns: 1fr; }
+  main, .nav-row, .block-tabs, .dots { padding-left: 14px; padding-right: 14px; }
+  header { padding: 16px 14px 12px; }
+}
+
+/* Static section styles (from Ergänzung) */
+.static-part{display:none;padding:4px 0}
+.static-part.show{display:block}
+.ss{font-family:sans-serif;font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6}
+.slt{font-family:sans-serif;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin:16px 0 8px}
+.slt:first-child{margin-top:0}
+.fgg{display:grid;grid-template-columns:repeat(auto-fill,minmax(188px,1fr));gap:8px;margin-bottom:4px}
+.fc{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:10px 13px}
+.fn{font-family:sans-serif;font-size:12px;font-weight:700;margin-bottom:4px}
+.ff{font-family:'Courier New',monospace;font-size:13px;font-weight:700;padding:4px 8px;border-radius:4px;margin-bottom:5px;display:inline-block}
+.fd{font-family:sans-serif;font-size:11px;color:var(--muted);line-height:1.55}
+.fd strong{color:var(--text);font-weight:600}
+.fc.green .ff{color:var(--green-dark);background:var(--green-light)}
+.fc.blue .ff{color:var(--blue);background:var(--blue-light)}
+.fc.amber .ff{color:#78350F;background:#FEF3C7}
+.fc.purple .ff{color:#4C1D95;background:#EDE9FE}
+.fc.red .ff{color:var(--red-dark);background:#FEE2E2}
+.mark-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:4px}
+.mc{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:10px 13px}
+.mt{font-family:sans-serif;font-size:12px;font-weight:700;margin-bottom:5px}
+.mr{font-family:sans-serif;font-size:12px;line-height:1.65}
+.mr strong{font-weight:700;color:var(--green-dark)}
+.mex{font-family:'Courier New',monospace;font-size:11px;background:#f9f8f4;border-left:3px solid var(--green);padding:5px 8px;border-radius:0 4px 4px 0;margin-top:5px;line-height:1.6}
+.cderivbox{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:4px}
+.cdb{border-radius:8px;padding:11px 13px;font-family:sans-serif;font-size:12px;line-height:1.75}
+.cdb strong{font-weight:700}
+.calc-card{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:14px 16px;margin-bottom:10px}
+.calc-title{font-family:sans-serif;font-size:13px;font-weight:700;margin-bottom:5px}
+.calc-formula{font-family:'Courier New',monospace;font-size:14px;background:var(--blue-light);color:var(--blue);padding:7px 10px;border-radius:5px;margin:7px 0;display:inline-block}
+.step{display:flex;gap:8px;font-family:sans-serif;font-size:12px;margin-bottom:4px;line-height:1.5}
+.step-n{width:20px;height:20px;background:var(--green-light);color:var(--green-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:10px;flex-shrink:0;margin-top:1px}
+.result{font-family:'Courier New',monospace;font-size:12px;background:var(--green-light);color:var(--green-dark);padding:5px 9px;border-radius:4px;margin-top:7px;display:inline-block;font-weight:700}
+.exam-note{font-family:sans-serif;font-size:11px;color:var(--muted);margin-top:5px;font-style:italic}
+.eq-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.eq-card{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:10px 12px}
+.eq-tag{font-family:sans-serif;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;display:inline-block;margin-bottom:5px}
+.eq-q{font-family:sans-serif;font-size:12px;font-weight:600;margin-bottom:6px;line-height:1.4;font-style:italic;background:var(--tag-bg);padding:5px 7px;border-radius:4px}
+.eq-why{font-family:sans-serif;font-size:11px;color:var(--muted);margin-top:5px;line-height:1.55;border-top:0.5px solid var(--border);padding-top:5px}
+.eq-why strong{color:var(--text);font-weight:600}
+@media(max-width:580px){.fgg,.mark-grid,.eq-grid,.cderivbox{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Chemie Komplettkurs</h1>
+  <span class="sub">MHH Vorklinik · 2021–2025 · 37 Lernkarten + Strukturformeln + Rechnungen + Einzelfragen</span>
+</header>
+
+<div class="block-tabs">
+  <div class="tab active" id="tab1" onclick="switchBlock(1)">Block 1 — jedes Jahr (15)</div>
+  <div class="tab" id="tab2" onclick="switchBlock(2)">Block 2 — 4× (7)</div>
+  <div class="tab" id="tab3" onclick="switchBlock(3)">Block 3 — 2–3× (6)</div>
+  <div class="tab" id="tab4" onclick="switchBlock(4)">Block 4 — Lücken (9)</div>
+  <div class="tab" id="tab5" onclick="switchBlock(5)">Strukturformeln</div>
+  <div class="tab" id="tab6" onclick="switchBlock(6)">Rechnungen</div>
+  <div class="tab" id="tab7" onclick="switchBlock(7)">Einzelfragen</div>
+</div>
+
+<div class="nav-row">
+  <button class="nav-btn" id="pv" onclick="go(-1)">← zurück</button>
+  <div class="nav-info" id="ni"></div>
+  <button class="nav-btn" id="nx" onclick="go(1)">weiter →</button>
+</div>
+<div class="dots" id="dots"></div>
+<main><div id="ca"></div>
+<!-- STATIC: Strukturformeln -->
+<div class="static-part" id="sp5">
+
+
+<div class="slt">Funktionelle Gruppen — Typ 1 & 2 Aufgaben</div>
+<p class="ss">Diese Gruppen musst du in Strukturformeln erkennen — entweder um sie zuzuordnen oder um eine bestimmte Gruppe zu markieren.</p>
+
+<div class="fg-grid">
+  <div class="fg-card green">
+    <div class="fg-name">Carbonsäure</div>
+    <div class="fg-formula">—C(=O)—OH</div>
+    <div class="fg-note"><strong>Erkennung:</strong> OH direkt an C=O. Sauer (pKa ~5). In Fettsäuren, Aminosäuren, Aspirin, Cholsäure. Fehling negativ.</div>
+  </div>
+  <div class="fg-card">
+    <div class="fg-name">Ester</div>
+    <div class="fg-formula">—C(=O)—O—</div>
+    <div class="fg-note"><strong>Erkennung:</strong> O zwischen C=O und C-Kette. In Phospholipiden (2×), Aspirin, Wachsen. Carbonsäurederivat ✓</div>
+  </div>
+  <div class="fg-card amber">
+    <div class="fg-name">Säureamid (Amid)</div>
+    <div class="fg-formula">—C(=O)—NH—</div>
+    <div class="fg-note"><strong>Erkennung:</strong> NH nach C=O. Peptidbindung ist ein Amid! In Proteinen, Harnstoff. Carbonsäurederivat ✓. <strong>Aspirin hat KEIN Amid</strong> (hat Ester!).</div>
+  </div>
+  <div class="fg-card">
+    <div class="fg-name">Aldehyd</div>
+    <div class="fg-formula">—CH=O  (C1)</div>
+    <div class="fg-note"><strong>Erkennung:</strong> C=O am Kettenende (C1), H am selben C. Fehling positiv. Entstammt primärem Alkohol.</div>
+  </div>
+  <div class="fg-card">
+    <div class="fg-name">Keton</div>
+    <div class="fg-formula">—C(=O)—  (C≥2)</div>
+    <div class="fg-note"><strong>Erkennung:</strong> C=O nicht am Ende, kein H am C=O. Fehling negativ (außer Fructose). Entstammt sek. Alkohol.</div>
+  </div>
+  <div class="fg-card green">
+    <div class="fg-name">Ether</div>
+    <div class="fg-formula">—C—O—C—</div>
+    <div class="fg-note"><strong>Erkennung:</strong> O zwischen zwei C-Ketten ohne C=O. In Vollacetalen. <strong>Kein</strong> Carbonsäurederivat.</div>
+  </div>
+  <div class="fg-card amber">
+    <div class="fg-name">Halbacetal</div>
+    <div class="fg-formula">—C(OH)(OR)—H</div>
+    <div class="fg-note"><strong>Erkennung:</strong> C hat OH <em>und</em> OR und H. Entsteht beim Ringschluss von Zuckern. Anomeres C! In Glucose, Maltose, Lactose (Fehling positiv).</div>
+  </div>
+  <div class="fg-card red">
+    <div class="fg-name">Vollacetal</div>
+    <div class="fg-formula">—C(OR)(OR')—H</div>
+    <div class="fg-note"><strong>Erkennung:</strong> C hat zwei OR, kein OH. In Saccharose (daher Fehling negativ). <strong>Kein</strong> Carbonsäurederivat.</div>
+  </div>
+  <div class="fg-card">
+    <div class="fg-name">Primärer Alkohol</div>
+    <div class="fg-formula">HO—CH₂—R</div>
+    <div class="fg-note"><strong>Erkennung:</strong> OH an C mit 2× H. → Oxidation → Aldehyd → Carbonsäure. 1-Propanol = primär.</div>
+  </div>
+  <div class="fg-card">
+    <div class="fg-name">Sekundärer Alkohol</div>
+    <div class="fg-formula">R—CH(OH)—R'</div>
+    <div class="fg-note"><strong>Erkennung:</strong> OH an C mit 1× H. → Oxidation → Keton. 2-Propanol = sekundär. Cyclohexanol = sekundär.</div>
+  </div>
+  <div class="fg-card purple">
+    <div class="fg-name">Primäres Amin</div>
+    <div class="fg-formula">R—NH₂</div>
+    <div class="fg-note"><strong>Erkennung:</strong> N mit 2× H. In Aminosäuren (α-NH₂), Anilin, Ethanolamin (PE-Kopfgruppe).</div>
+  </div>
+  <div class="fg-card purple">
+    <div class="fg-name">Sekundäres Amin</div>
+    <div class="fg-formula">R—NH—R'</div>
+    <div class="fg-note"><strong>Erkennung:</strong> N mit 1× H, 2 C-Substituenten. In Dipeptiden (N-terminal nach 1. Peptidbindung), vielen LA.</div>
+  </div>
+  <div class="fg-card purple">
+    <div class="fg-name">Tertiäres Amin</div>
+    <div class="fg-formula">R—N(R')(R'')—</div>
+    <div class="fg-note"><strong>Erkennung:</strong> N mit 0× H, 3 C-Substituenten. Kein H-Brücken-Donor. In vielen Lokalanästhetika (Lidocain hat tert. Amin).</div>
+  </div>
+  <div class="fg-card red">
+    <div class="fg-name">Quartäres Ammoniumion</div>
+    <div class="fg-formula">R₄N⁺</div>
+    <div class="fg-note"><strong>Erkennung:</strong> N⁺ mit 4× C-Substituenten, kein H. Immer positiv geladen. In Cholin (PC-Kopfgruppe). PE hat KEIN quartäres N!</div>
+  </div>
+  <div class="fg-card green">
+    <div class="fg-name">Thiol</div>
+    <div class="fg-formula">R—SH</div>
+    <div class="fg-note"><strong>Erkennung:</strong> S-H statt O-H. In Cystein, Glutathion. → oxidiert → Disulfid (-SS-). Saurer als Alkohol (pKa ~10).</div>
+  </div>
+  <div class="fg-card">
+    <div class="fg-name">Phosphatester</div>
+    <div class="fg-formula">R—O—P(=O)(O⁻)—O—R'</div>
+    <div class="fg-note"><strong>Erkennung:</strong> P verbindet zwei OR-Gruppen. In Phospholipiden. <strong>Phosphorsäureanhydrid</strong> = P-O-P (nicht in Phospholipiden!).</div>
+  </div>
+</div>
+
+<div class="slt">Markieraufgaben — Wie du die richtige Stelle findest</div>
+<div class="mark-grid">
+  <div class="mark-card">
+    <div class="mark-title" style="color:var(--green-dark)">β-konfiguriertes OH markieren</div>
+    <div class="mark-rule">
+      Bei Glucopyranose (Haworth): <strong>β-OH steht oben</strong> (equatorial, auf gleicher Seite wie CH₂OH). α-OH steht unten (axial).<br><br>
+      Eselsbrücke: <strong>β = beide oben</strong> (β-OH und CH₂OH = oben = gleiche Seite).
+    </div>
+    <div class="mark-example">In der Prüfung 2025:
+Das OH im oberen Ring an
+erster Stelle (ganz rechts)
+→ das ist das β-konfigurierte OH</div>
+  </div>
+  <div class="mark-card">
+    <div class="mark-title" style="color:var(--blue)">Anomeres C markieren</div>
+    <div class="mark-rule">
+      Das anomere C ist dasjenige C, das beim Ringschluss das neue Chiralitätszentrum bildet. Es war das <strong>Carbonyl-C</strong> in der offenen Form.<br><br>
+      Bei Glucose (Aldohexose): <strong>C1</strong>. Bei Fructose (Ketohexose): <strong>C2</strong>. Es hat: Ring-O + OH + H + C-Kette.
+    </div>
+    <div class="mark-example">In Maltose (2024):
+Das C1 des linken Glucoserings
+(trägt die Halbacetalgruppe,
+direkt an Ring-O und OH)</div>
+  </div>
+  <div class="mark-card">
+    <div class="mark-title" style="color:var(--amber)">Chirales C-Atom markieren</div>
+    <div class="mark-rule">
+      Ein chirales C hat <strong>4 verschiedene Substituenten</strong>. Prüfe jedes C mit 4 Bindungen:<br>
+      — Sind alle 4 Substituenten verschieden? → chiral ✓<br>
+      — Hat es 2× H oder 2× gleiche Gruppe? → nicht chiral ✗
+    </div>
+    <div class="mark-example">Metoprolol (2021):
+Das C an das OH gebunden ist
+→ trägt: OH, H, Aryl-Kette,
+   Amino-Kette → 4 versch. → chiral</div>
+  </div>
+  <div class="mark-card">
+    <div class="mark-title" style="color:var(--purple)">Chelatkomplex erkennen</div>
+    <div class="mark-rule">
+      Chelat = Ligand bindet mit <strong>≥2 Donoratomen</strong> an ein Zentralatom. Erkennbar an gepunkteten/gestrichelten Bindungen die von 2+ Atomen eines Liganden zum Metall zeigen.<br><br>
+      <strong>Ethylendiamin (en):</strong> H₂N-CH₂-CH₂-NH₂ → beide NH₂ binden → Chelat.
+    </div>
+    <div class="mark-example">In 2025:
+Cu²⁺ mit 2× en (4 NH₂-Gruppen)
+→ je en bindet mit 2 N ans Cu
+→ Chelat ✓ (nicht Ni(CO)₄ oder
+  Co(NH₃)₆ — die sind kein Chelat)</div>
+  </div>
+</div>
+
+<div class="slt">Carbonsäurederivate — Zuordnungsaufgabe 2025</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+  <div style="background:var(--ok-bg);border-radius:8px;padding:12px 14px">
+    <div style="font-family:sans-serif;font-size:12px;font-weight:700;color:var(--ok);margin-bottom:8px">✓ Sind Carbonsäurederivate</div>
+    <div style="font-family:sans-serif;font-size:12px;line-height:1.8">
+      <strong>Ester</strong> — R-COO-R' (Carbonsäure + Alkohol)<br>
+      <strong>Amid/Peptidbindung</strong> — R-CO-NH-R' (Carbonsäure + Amin)<br>
+      <strong>Anhydrid</strong> — R-CO-O-CO-R' (2× Carbonsäure)<br>
+      <strong>Säurechlorid</strong> — R-CO-Cl<br>
+      Alle entstehen durch Substitution der OH-Gruppe der Carbonsäure.
+    </div>
+  </div>
+  <div style="background:var(--no-bg);border-radius:8px;padding:12px 14px">
+    <div style="font-family:sans-serif;font-size:12px;font-weight:700;color:var(--no);margin-bottom:8px">✗ Sind KEINE Carbonsäurederivate</div>
+    <div style="font-family:sans-serif;font-size:12px;line-height:1.8">
+      <strong>Halbacetal</strong> — entsteht aus Aldehyd + Alkohol (kein COOH)<br>
+      <strong>Vollacetal</strong> — entsteht aus Halbacetal + Alkohol (kein COOH)<br>
+      <strong>Ether</strong> — R-O-R' (kein C=O, kein COOH)<br>
+      <strong>Keton</strong> — C=O innen (kein COOH-Ausgangsstoff)<br>
+      Merke: nur was aus einer Carbonsäure (-COOH) entsteht!
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- STATIC: Rechnungen -->
+<div class="static-part" id="sp6">
+
+
+<p class="ss">Alle Rechentypen die in den Prüfungen vorkamen — mit vollständigem Lösungsweg und Prüfungsbeispielen.</p>
+
+<div class="calc-card">
+  <div class="calc-title">① IEP berechnen — Neutrale Aminosäure (z.B. Alanin, Glycin)</div>
+  <div class="calc-formula">IEP = (pKa1 + pKa2) / 2</div>
+  <div class="calc-steps">
+    <strong>Wann:</strong> AS hat nur 2 ionisierbare Gruppen (COOH + NH₃⁺). Keine ionisierbare Seitenkette.
+  </div>
+  <div>
+    <div class="step"><div class="step-n">1</div><div class="step-t">Gegeben: Alanin, pKa1 = 2,35 (COOH), pKa2 = 9,87 (NH₃⁺)</div></div>
+    <div class="step"><div class="step-n">2</div><div class="step-t">IEP = (2,35 + 9,87) / 2 = 12,22 / 2</div></div>
+    <div class="step"><div class="step-n">3</div><div class="step-t">IEP = 6,11</div></div>
+  </div>
+  <div class="result">→ IEP = 6,11</div>
+  <div class="exam-note">Prüfung 2021: IEP von L-Alanin = 6 (gerundeter Wert). Bei pH 3 (pH &lt; IEP) → Kation.</div>
+</div>
+
+<div class="calc-card">
+  <div class="calc-title">② IEP berechnen — Saure Aminosäure (Glutaminsäure, Asparaginsäure)</div>
+  <div class="calc-formula">IEP = (pKa1 + pKa_Seitenkette) / 2</div>
+  <div class="calc-steps">
+    <strong>Wann:</strong> AS hat eine saure Seitenkette (extra COOH). pKa_Seitenkette liegt zwischen pKa1 und pKa2.
+  </div>
+  <div>
+    <div class="step"><div class="step-n">1</div><div class="step-t">Gegeben: Glutaminsäure, pKa1 = 2,1 (α-COOH), pKa2 = 9,9 (NH₃⁺), pKa3 = 4,3 (Seitenkette-COOH)</div></div>
+    <div class="step"><div class="step-n">2</div><div class="step-t">Zwitterion existiert wenn beide COOH deprotoniert, NH₃⁺ protoniert → das ist zwischen pKa1 und pKa_Seitenkette</div></div>
+    <div class="step"><div class="step-n">3</div><div class="step-t">IEP = (pKa1 + pKa_Seitenkette) / 2 = (2,1 + 4,3) / 2 = 6,4 / 2</div></div>
+  </div>
+  <div class="result">→ IEP = 3,2</div>
+  <div class="exam-note">Prüfung 2022: genau diese Rechnung. Prüfung 2024 Freitext: gleicher Typ (Glutaminsäure).</div>
+</div>
+
+<div class="calc-card">
+  <div class="calc-title">③ IEP berechnen — Basische Aminosäure (Ornithin, Lysin, Arginin)</div>
+  <div class="calc-formula">IEP = (pKa2 + pKa3) / 2</div>
+  <div class="calc-steps">
+    <strong>Wann:</strong> AS hat eine basische Seitenkette (extra NH₃⁺). pKa3 liegt über pKa2.
+  </div>
+  <div>
+    <div class="step"><div class="step-n">1</div><div class="step-t">Gegeben: Ornithin, pKa1 = 1,94 (α-COOH), pKa2 = 8,75 (α-NH₃⁺), pKa3 = 10,8 (Seitenkette-NH₃⁺)</div></div>
+    <div class="step"><div class="step-n">2</div><div class="step-t">Zwitterion: COOH deprotoniert, beide NH₃⁺ protoniert → existiert zwischen pKa2 und pKa3</div></div>
+    <div class="step"><div class="step-n">3</div><div class="step-t">IEP = (8,75 + 10,8) / 2 = 19,55 / 2</div></div>
+  </div>
+  <div class="result">→ IEP = 9,775</div>
+  <div class="exam-note">Prüfung 2024: genau diese Rechnung. Prüfung 2025: Folgefrage — welche Form bei pH = 9,775? → Zwitterion (pH = IEP).</div>
+</div>
+
+<div class="calc-card">
+  <div class="calc-title">④ Ladungsform bestimmen (kein Rechnen nötig)</div>
+  <div class="calc-formula">pH &lt; IEP → Kation &nbsp;|&nbsp; pH = IEP → Zwitterion &nbsp;|&nbsp; pH &gt; IEP → Anion</div>
+  <div>
+    <div class="step"><div class="step-n">1</div><div class="step-t">IEP von Ornithin = 9,775 (aus Rechnung oben)</div></div>
+    <div class="step"><div class="step-n">2</div><div class="step-t">Frage: welche Form bei pH = 9,775?</div></div>
+    <div class="step"><div class="step-n">3</div><div class="step-t">pH = IEP → Zwitterion</div></div>
+  </div>
+  <div class="result">→ Zwitterion ✓</div>
+  <div class="exam-note">Prüfung 2025 Q36. Weitere Beispiele: Alanin IEP=6, pH=3 → pH &lt; IEP → Kation.</div>
+</div>
+
+<div class="calc-card">
+  <div class="calc-title">⑤ pKb aus pKa berechnen (korrespondierendes Paar)</div>
+  <div class="calc-formula">pKa + pKb = 14 &nbsp;&nbsp;→&nbsp;&nbsp; pKb = 14 − pKa</div>
+  <div>
+    <div class="step"><div class="step-n">1</div><div class="step-t">Gegeben: HCl hat pKa = −6. Gesucht: pKb von Cl⁻</div></div>
+    <div class="step"><div class="step-n">2</div><div class="step-t">pKb = 14 − pKa = 14 − (−6) = 14 + 6</div></div>
+    <div class="step"><div class="step-n">3</div><div class="step-t">Vorzeichen beachten: pKa ist negativ → Subtraktion eines negativen = Addition</div></div>
+  </div>
+  <div class="result">→ pKb(Cl⁻) = 20</div>
+  <div class="exam-note">Prüfung 2023 Freitext. Cl⁻ ist eine extrem schwache Base (pKb = 20) → Salzsäure ist eine starke Säure.</div>
+</div>
+
+<div class="calc-card">
+  <div class="calc-title">⑥ pH einer starken Säure berechnen</div>
+  <div class="calc-formula">pH = −log₁₀[H⁺] = −log₁₀(c)</div>
+  <div>
+    <div class="step"><div class="step-n">1</div><div class="step-t">Gegeben: 0,1 mol/l HCl (pKa = −6, also vollständig dissoziiert)</div></div>
+    <div class="step"><div class="step-n">2</div><div class="step-t">[H⁺] = 0,1 mol/l = 10⁻¹ mol/l</div></div>
+    <div class="step"><div class="step-n">3</div><div class="step-t">pH = −log(10⁻¹) = −(−1) = 1</div></div>
+  </div>
+  <div class="result">→ pH = 1</div>
+  <div class="exam-note">Prüfung 2022 Freitext. Merke: 0,1 mol/l → pH 1; 0,01 mol/l → pH 2; 0,001 mol/l → pH 3.</div>
+</div>
+
+<div class="calc-card">
+  <div class="calc-title">⑦ pH-Änderung → H⁺-Konzentration (Faktor berechnen)</div>
+  <div class="calc-formula">ΔpH = 1 → H⁺ ändert sich um Faktor 10</div>
+  <div>
+    <div class="step"><div class="step-n">1</div><div class="step-t">Gegeben: pH sinkt von 7,4 auf 6,4 (Entzündung)</div></div>
+    <div class="step"><div class="step-n">2</div><div class="step-t">ΔpH = 7,4 − 6,4 = 1,0</div></div>
+    <div class="step"><div class="step-n">3</div><div class="step-t">Jede pH-Einheit = Faktor 10. pH sinkt → H⁺ steigt. Faktor = 10^ΔpH = 10^1</div></div>
+  </div>
+  <div class="result">→ H⁺ erhöht sich um Faktor 10</div>
+  <div class="exam-note">Prüfung 2023 und 2025 (identische Frage). Falle: "Faktor 2" (wäre für ΔpH ≈ 0,3). Faktor 10 = immer richtig bei ΔpH = 1.</div>
+</div>
+
+<div class="calc-card">
+  <div class="calc-title">⑧ Mol-zu-Gramm Rechnung</div>
+  <div class="calc-formula">m = n × M &nbsp;&nbsp;(m in g, n in mol, M in g/mol)</div>
+  <div>
+    <div class="step"><div class="step-n">1</div><div class="step-t">Gegeben: 4 mmol Calcium, M(Ca) = 40 g/mol. Gesucht: Masse in mg.</div></div>
+    <div class="step"><div class="step-n">2</div><div class="step-t">n = 4 mmol = 0,004 mol</div></div>
+    <div class="step"><div class="step-n">3</div><div class="step-t">m = 0,004 mol × 40 g/mol = 0,16 g = 160 mg</div></div>
+  </div>
+  <div class="result">→ 160 mg (Antwort b)</div>
+  <div class="exam-note">Prüfung 2022. Einheitenkonversion: mmol → mol (÷1000), g → mg (×1000). Beide ×/÷1000 heben sich auf → n[mmol] × M = m[mg].</div>
+</div>
+
+<div class="calc-card">
+  <div class="calc-title">⑨ Henderson-Hasselbalch — Puffer-pH</div>
+  <div class="calc-formula">pH = pKa + log([A⁻] / [HA])</div>
+  <div>
+    <div class="step"><div class="step-n">1</div><div class="step-t">Wenn [A⁻] = [HA] (gleiches Verhältnis): log(1) = 0 → pH = pKa</div></div>
+    <div class="step"><div class="step-n">2</div><div class="step-t">Beispiel: Acetatpuffer, pKa = 4,75, [Acetat]/[Essigsäure] = 1 → pH = 4,75</div></div>
+    <div class="step"><div class="step-n">3</div><div class="step-t">Wenn [A⁻] &gt; [HA]: log &gt; 0 → pH &gt; pKa. Wenn [A⁻] &lt; [HA]: pH &lt; pKa.</div></div>
+  </div>
+  <div class="result">→ Gleiches Verhältnis → gleicher pH, unabhängig von Konzentration</div>
+  <div class="exam-note">Prüfung 2025 Q7: zwei Puffer mit gleichem Verhältnis aber verschiedener Konzentration → gleicher pH-Wert. Prüfung 2021: Puffer mit pH 4,5 statt 5 → Überschuss an HA → puffert besser gegen Basen.</div>
+</div>
+
+</div>
+</div>
+
+<!-- STATIC: Einzelfragen -->
+<div class="static-part" id="sp7">
+
+
+<p class="ss">Fragen die 1–2 Mal vorkamen, aber kein klares Wiederholungsmuster haben. Trotzdem wichtig — das Konzept dahinter ist oft einfacher als bei den Dauerthemen.</p>
+
+<div class="eq-grid">
+
+  <div class="eq-card">
+    <span class="eq-tag" style="background:var(--amber-light);color:var(--amber)">2023 — 1×</span>
+    <div class="eq-q">Wodurch entsteht eine respiratorische Azidose?</div>
+    <div class="opt no"><span class="opt-l">a)</span>CO-Vergiftung</div>
+    <div class="opt no"><span class="opt-l">b)</span>Methanolvergiftung</div>
+    <div class="opt ok"><span class="opt-l">c)</span>Atemdepression</div>
+    <div class="opt no"><span class="opt-l">d)</span>Hyperventilation</div>
+    <div class="opt no"><span class="opt-l">e)</span>Geringerer O₂-Gehalt</div>
+    <div class="eq-why"><strong>Warum c?</strong> Atemdepression → weniger CO₂ abgeatmet → CO₂ steigt im Blut → CO₂ + H₂O → H₂CO₃ → H⁺ ↑ → Azidose. Hyperventilation → CO₂ ↓ → Alkalose (umgekehrt!).</div>
+  </div>
+
+  <div class="eq-card">
+    <span class="eq-tag" style="background:var(--amber-light);color:var(--amber)">2024 — 1×</span>
+    <div class="eq-q">Darmspiegelung: CO₂ wird in den Darm gepumpt statt Luft. Welchen Vorteil hat CO₂?</div>
+    <div class="opt no"><span class="opt-l">a)</span>Kleiner → besser durch Darmwand diffundierbar</div>
+    <div class="opt ok"><span class="opt-l">b)</span>Bildet GG mit HCO₃⁻, das gut wasserlöslich ist</div>
+    <div class="opt no"><span class="opt-l">c)</span>CO₂ wirkt narkotisierend</div>
+    <div class="opt no"><span class="opt-l">d)</span>Fällt als CaCO₃ aus</div>
+    <div class="opt no"><span class="opt-l">e)</span>Weniger Mengen nötig</div>
+    <div class="eq-why"><strong>Warum b?</strong> CO₂ + H₂O ⇌ H₂CO₃ ⇌ HCO₃⁻ + H⁺. Das Gleichgewicht bewirkt, dass CO₂ im Körper schnell resorbiert wird → keine Blähungen. N₂ (Hauptbestandteil Luft) ist nicht wasserlöslich und kann nicht resorbiert werden.</div>
+  </div>
+
+  <div class="eq-card">
+    <span class="eq-tag" style="background:var(--blue-light);color:var(--blue)">2025 — 1×</span>
+    <div class="eq-q">Welche Aussage zu Selenocystein trifft zu?</div>
+    <div class="opt no"><span class="opt-l">a)</span>β-Konfiguration dargestellt</div>
+    <div class="opt no"><span class="opt-l">b)</span>Reagiert basisch</div>
+    <div class="opt ok"><span class="opt-l">c)</span>L-Konfiguration dargestellt</div>
+    <div class="opt no"><span class="opt-l">d)</span>Hat zwei C-Chirale</div>
+    <div class="opt no"><span class="opt-l">e)</span>Hat zwei IEPs</div>
+    <div class="eq-why"><strong>Warum c?</strong> Selenocystein ist die 21. proteinogene AS. Wie alle natürlichen AS = L-konfiguriert. Hat ein chirales C (α-C). SeH ist analog zu Cystein (SH). Hat EINEN IEP (eine AS = zwei pKa = ein IEP, außer basische/saure AS). Tauchte auch 2021 auf — immer L.</div>
+  </div>
+
+  <div class="eq-card">
+    <span class="eq-tag" style="background:var(--blue-light);color:var(--blue)">2023 — 1×</span>
+    <div class="eq-q">Welches ist ein Radikal?</div>
+    <div class="opt no"><span class="opt-l">a)</span>O₃ (Ozon)</div>
+    <div class="opt ok"><span class="opt-l">b)</span>NO (Stickstoffmonoxid)</div>
+    <div class="opt no"><span class="opt-l">c)</span>H₂O₂ (Wasserstoffperoxid)</div>
+    <div class="opt no"><span class="opt-l">d)</span>HNO</div>
+    <div class="opt no"><span class="opt-l">e)</span>NO₂</div>
+    <div class="eq-why"><strong>Warum b?</strong> Ein Radikal hat ein <em>ungepaartes Elektron</em>. NO hat 11 Elektronen → ungerades → ungepaart → Radikal. O₃ hat nur gepaarte Elektronen. H₂O₂ = kein Radikal (aber schwaches Oxidationsmittel). NO₂ hat auch ungepaartes Elektron — ist ebenfalls ein Radikal! → manche Quellen sagen auch e ist richtig.</div>
+  </div>
+
+  <div class="eq-card">
+    <span class="eq-tag" style="background:var(--purple-light);color:var(--purple)">2023 — 1×</span>
+    <div class="eq-q">Proteinurie-Nachweis: Welche Reaktion eignet sich?</div>
+    <div class="opt no"><span class="opt-l">a)</span>Iod-Stärke-Nachweis</div>
+    <div class="opt no"><span class="opt-l">b)</span>Fehling-Nachweis</div>
+    <div class="opt no"><span class="opt-l">c)</span>Tollens-Reaktion</div>
+    <div class="opt ok"><span class="opt-l">d)</span>Biuret-Reaktion</div>
+    <div class="opt no"><span class="opt-l">e)</span>Ninhydrin-Reaktion</div>
+    <div class="eq-why"><strong>Warum d?</strong> Biuret-Reaktion: Cu²⁺ + Peptidbindungen → violetter Komplex. Nachweisreaktionen merken: Stärke = Iod. Aldehyde/reduzierende Zucker = Fehling oder Tollens. Einzelne AS = Ninhydrin. Proteine (mehrere Peptidbindungen) = Biuret.</div>
+  </div>
+
+  <div class="eq-card">
+    <span class="eq-tag" style="background:var(--purple-light);color:var(--purple)">2023 — 1×</span>
+    <div class="eq-q">Seifenblasen vs. Zellmembranen: Was trifft zu?</div>
+    <div class="opt ok"><span class="opt-l">a)</span>Beide umgekehrt zueinander orientiert</div>
+    <div class="opt no"><span class="opt-l">b)</span>Beide unpolar</div>
+    <div class="opt no"><span class="opt-l">c)</span>Zellmembran aus Salzen der Fettsäuren</div>
+    <div class="opt no"><span class="opt-l">d)</span>Aus gleichen Molekülen</div>
+    <div class="opt no"><span class="opt-l">e)</span>Seifenblasen aus Phospholipiden</div>
+    <div class="eq-why"><strong>Warum a?</strong> Seifenblase: Fettsäure-Anionen mit polaren Köpfen außen, unpolaren Schwänzen innen. Zellmembran: Phospholipide mit polaren Köpfen außen, unpolaren Schwänzen innen (Doppelschicht). Beide ampiphil, aber verschiedene Moleküle.</div>
+  </div>
+
+  <div class="eq-card">
+    <span class="eq-tag" style="background:var(--amber-light);color:var(--amber)">2021 — 1×</span>
+    <div class="eq-q">Desinfektionsmittel nach WHO (Ethanol 96% + H₂O₂ + Glycerol). Wie wirkt es?</div>
+    <div class="opt no"><span class="opt-l">a)</span>H₂O₂ → Disproportionierung → O₂ deaktiviert Viren</div>
+    <div class="opt ok"><span class="opt-l">b)</span>Ethanol denaturiert Proteine von Krankheitserregern</div>
+    <div class="opt no"><span class="opt-l">c)</span>Glycerin bindet Viren durch Viskosität</div>
+    <div class="opt no"><span class="opt-l">d)</span>Ethanol entzieht Zellen Wasser</div>
+    <div class="eq-why"><strong>Warum b?</strong> Ethanol (70–80%) denaturiert Proteine (Tertiär-/Sekundärstruktur) irreversibel → Enzyme und Hüllproteine der Erreger werden zerstört. Glycerin dient als Rückfetter (schützt Haut). H₂O₂ tötet resistente Sporen ab.</div>
+  </div>
+
+  <div class="eq-card">
+    <span class="eq-tag" style="background:var(--blue-light);color:var(--blue)">2021/25 — 2×</span>
+    <div class="eq-q">Was trifft auf Isotope zu?</div>
+    <div class="opt no"><span class="opt-l">a)</span>Unterscheiden sich in Elektronenzahl</div>
+    <div class="opt no"><span class="opt-l">b)</span>Haben immer gleiche Elektronen- und Neutronenzahl</div>
+    <div class="opt ok"><span class="opt-l">c)</span>Kohlenstoffisotope unterscheiden sich in ihrer Massenzahl</div>
+    <div class="opt no"><span class="opt-l">d)</span>Immer unterschiedliche Protonenzahl</div>
+    <div class="opt no"><span class="opt-l">e)</span>Können nur in Metallen vorkommen</div>
+    <div class="eq-why"><strong>Warum c?</strong> Isotope = gleiche Protonenzahl (gleiches Element), verschiedene Neutronenzahl → verschiedene Massenzahl. ¹²C, ¹³C, ¹⁴C haben alle 6 Protonen aber 6/7/8 Neutronen → Massenzahlen 12/13/14.</div>
+  </div>
+
+  <div class="eq-card">
+    <span class="eq-tag" style="background:var(--amber-light);color:var(--amber)">2021 — 1×</span>
+    <div class="eq-q">Was trifft auf eine Linolsäure (Bild) zu?</div>
+    <div class="opt no"><span class="opt-l">a)</span>Ist eine Omega-3-Fettsäure</div>
+    <div class="opt ok"><span class="opt-l">b)</span>Ist eine essenzielle Fettsäure</div>
+    <div class="opt no"><span class="opt-l">c)</span>Enthält konjugierte Doppelbindungen</div>
+    <div class="opt no"><span class="opt-l">d)</span>Doppelbindung ist trans-konfiguriert</div>
+    <div class="eq-why"><strong>Warum b?</strong> Linolsäure = 18:2 (Δ9,12) = Omega-6 (nicht Omega-3!). Essenziell = muss mit Nahrung aufgenommen werden. Doppelbindungen sind cis (nicht trans). Keine konjugierten Doppelbindungen (Δ9,12 = 3 C dazwischen = nicht konjugiert).</div>
+  </div>
+
+  <div class="eq-card">
+    <span class="eq-tag" style="background:var(--purple-light);color:var(--purple)">2022 — 1×</span>
+    <div class="eq-q">Was trifft auf den Ringschluss von Monosacchariden zu?</div>
+    <div class="opt no"><span class="opt-l">a)</span>Erfolgt nur bei Aldosen</div>
+    <div class="opt no"><span class="opt-l">b)</span>Es reagieren immer zwei C-H miteinander</div>
+    <div class="opt no"><span class="opt-l">c)</span>Braucht immer Wasser</div>
+    <div class="opt no"><span class="opt-l">d)</span>Ein Chiralitätszentrum geht verloren</div>
+    <div class="opt ok"><span class="opt-l">e)</span>Im Gleichgewicht mit der offenen Form</div>
+    <div class="eq-why"><strong>Warum e?</strong> Mutarotation — Anomere stehen über die offene Kettenform im GG (α ⇌ offen ⇌ β). Kein Chiralitätszentrum geht verloren — es entsteht sogar ein neues (anomeres C)! Kein Wasser nötig (intramolekulare Reaktion).</div>
+  </div>
+
+  <div class="eq-card">
+    <span class="eq-tag" style="background:var(--green-light);color:var(--green-dark)">2025 — 1×</span>
+    <div class="eq-q">Was trifft auf Fructose zu?</div>
+    <div class="opt no"><span class="opt-l">a)</span>C2–C5 sind chirale C-Atome</div>
+    <div class="opt ok"><span class="opt-l">b)</span>Fructose ist ein Strukturisomer von Glucose</div>
+    <div class="opt no"><span class="opt-l">c)</span>Es ist eine Aldose</div>
+    <div class="opt no"><span class="opt-l">d)</span>Es ist eine Pentose</div>
+    <div class="opt no"><span class="opt-l">e)</span>Sie ist L-konfiguriert</div>
+    <div class="eq-why"><strong>Warum b?</strong> Fructose und Glucose haben beide die Summenformel C₆H₁₂O₆, aber verschiedene Strukturen → Strukturisomere. Fructose ist eine Ketohexose (Keton an C2), Glucose ist eine Aldohexose (Aldehyd an C1). Chirale C-Atome: C3,C4,C5 (nicht C2 im Ring!). D-konfiguriert (natürlich).</div>
+  </div>
+
+  <div class="eq-card">
+    <span class="eq-tag" style="background:var(--green-light);color:var(--green-dark)">2025 — 1×</span>
+    <div class="eq-q">Quartärstruktur von Proteinen — welches Protein hat eine?</div>
+    <div class="opt ok"><span class="opt-l">a)</span>Hämoglobin</div>
+    <div class="opt no"><span class="opt-l">b)</span>Vasopressin</div>
+    <div class="opt no"><span class="opt-l">c)</span>Myoglobin</div>
+    <div class="opt no"><span class="opt-l">d)</span>Glucagon</div>
+    <div class="opt no"><span class="opt-l">e)</span>Albumin</div>
+    <div class="eq-why"><strong>Warum a?</strong> Hämoglobin = 4 Untereinheiten (2α + 2β). Quartärstruktur braucht mind. 2 Polypeptidketten. Myoglobin = 1 Kette (nur bis Tertiär). Vasopressin = kleines Peptid (9 AS). Glucagon = 29 AS, 1 Kette.</div>
+  </div>
+
+</div><!-- end eq-grid -->
+
+<div style="background:var(--blue-light);border-radius:10px;padding:14px 16px;margin-top:16px;font-family:sans-serif;font-size:12px;color:var(--blue);line-height:1.7">
+  <strong>Strategie für Einzelfragen:</strong> Diese Fragen tauchen selten auf und haben meistens ein konzeptuell einfaches Prinzip dahinter. Lerne nicht die Antwort auswendig, sondern das eine Konzept (z.B. "Atemdepression → CO₂ steigt → Azidose"). Das reicht, um auch unbekannte Formulierungen dieser Themen zu erkennen.
+</div>
+
+</div>
+</div>
+</main>
+
+<script>
+const B = {
+1:[
+{tag:"Titrationskurve & Puffer",bg:"#D1FAE5",tc:"#065f46",years:["2021","2022","2023","2024","2025"],
+mk:"<strong>pH = pKa</strong> genau beim Halbäquivalenzpunkt (50% neutralisiert). <strong>Pufferbereich</strong> = flaches Plateau (pH ≈ pKa ± 1). <strong>ÄP starke Säure</strong>: pH = 7. <strong>ÄP schwache Säure</strong>: pH &gt; 7. Puffer braucht <strong>schwache Säure + korrespondierendes Salz</strong> — aus HCl/Cl⁻ kein Puffer. Bei <strong>gleichem Verhältnis</strong> = gleicher pH, egal welche Konzentration.",
+vs:[
+{y:"2021 — Markieraufgabe",q:"Markiere den Äquivalenzpunkt der schwachen Säure",os:[{t:"Punkt bei pH > 7 und Neutralisationsgrad = 1",ok:1}]},
+{y:"2022 — Zuordnung (5 Punkte auf Kurve)",q:"Ordne zu: pH=pKa, Pufferbereich, ÄP stark, ÄP schwach, Halbäquivalenzpunkt",os:[{t:"(2) pH=pKa / Halbäquivalenzpunkt",ok:1},{t:"(3) Pufferbereich (grauer Bereich)",ok:1},{t:"(4) ÄP der starken Säure (HCl, pH=7)",ok:1},{t:"(5) ÄP der schwachen Säure (HAc, pH>7)",ok:1}]},
+{y:"2023 — Puffereigenschaften",q:"Welche Aussage zum Puffer trifft zu?",os:[{t:"a) pH entspricht immer dem pKa der Säure",ok:0},{t:"b) pH nur durch Konzentrationsverhältnis bestimmt",ok:0},{t:"c) Bei Säurezugabe ändert sich das Verhältnis",ok:1},{t:"d) pH nur durch den pKa bestimmt",ok:0},{t:"e) Puffer = starke Säure + korrespondierende Base",ok:0}]},
+{y:"2025 — zwei Pufferlösungen",q:"Puffer A: 10 ml, 0,1 mol/l. Puffer B: 100 ml, 0,01 mol/l. Gleiches Verhältnis CH₃COOH/CH₃COO⁻. Was trifft zu?",os:[{t:"a) Puffern gleiche Menge Säure",ok:1},{t:"b) Puffern unterschiedliche Menge Base",ok:0},{t:"c) Haben gleiche Konzentration",ok:0},{t:"d) Haben unterschiedliche pH-Werte",ok:0},{t:"e) Gelöste Elektrolyte in Gramm identisch",ok:0}]}],
+ps:["pH=pKa = Halbäquivalenzpunkt (Punkt, nicht Bereich!)","ÄP schwache Säure: pH > 7","HCl/Cl⁻ → kein Puffer (starke Säure)","Gleiches Verhältnis → gleicher pH"],
+tr:"<strong>Häufige Verwechslung 2024/25:</strong> pH=pKa und der Pufferbereich liegen nahe beieinander. pH=pKa ist ein <em>Punkt</em> (beim Halbäquivalenzpunkt), der Pufferbereich ist der <em>Abschnitt</em> darum herum. Diese wurden in der Prüfung 2024/25 von Studierenden vertauscht → Anfechtung!"},
+
+{tag:"Cholsäure / Gallensäure",bg:"#D1FAE5",tc:"#065f46",years:["2021","2022","2023","2024","2025"],
+mk:"Cholsäure: <strong>Steroidgerüst + COOH</strong>, pKa ≈ 6. Im <strong>Dünndarm (pH 7–8) deprotoniert</strong> (Cholat-Anion) → gut wasserlöslich → <strong>beste Emulgierwirkung im Basischen</strong>. Im Magen (sauer) protoniert → schlecht löslich. <strong>Kein Lipidmembran-Bestandteil</strong>. Keine Mesomerie durch gesättigte Ringe.",
+vs:[
+{y:"2021/22 — Emulgierwirkung",q:"Bild Cholsäure: Was trifft zu?",os:[{t:"a) Im Dünndarm beste Emulsionskraft",ok:1},{t:"b) Emulgiert im sauren am besten",ok:0},{t:"c) Überwiegend polares Molekül",ok:0},{t:"d) Liegt in saurem Milieu deprotoniert vor",ok:0},{t:"e) Bei hohem basischen pH gut membrangängig",ok:0}]},
+{y:"2022 — Dünndarm",q:"Was trifft auf Cholsäure zu?",os:[{t:"a) Löst sich gut im Sauren",ok:0},{t:"b) Emulgiert am besten im Sauren",ok:0},{t:"c) Liegt im Dünndarm größtenteils deprotoniert vor",ok:1},{t:"d) Entfaltet Wirkung im Magen",ok:0},{t:"e) Größtenteils polar",ok:0}]},
+{y:"2023 — Emulgierung",q:"Was trifft auf die abgebildete Cholsäure zu?",os:[{t:"a) Mehrfach ungesättigte Fettsäure",ok:0},{t:"b) Ladung über Ringe mesomeriestabilisiert",ok:0},{t:"c) Emulgiert Fette am besten im Basischen",ok:1},{t:"d) Im Sauren gut wasserlöslich",ok:0},{t:"e) Wichtiger Bestandteil von Lipidschichten",ok:0}]},
+{y:"2025 — Emulgierung",q:"Was trifft auf Cholsäure zu?",os:[{t:"a) Mehrfach ungesättigte Fettsäure",ok:0},{t:"b) Ladung über Ringe mesomeriestabilisiert",ok:0},{t:"c) Emulgiert im Basischen am besten",ok:1},{t:"d) Im Sauren gut wasserlöslich",ok:0},{t:"e) Wichtiger Bestandteil von Lipidschichten",ok:0}]}],
+ps:["Basisch/Dünndarm = beste Emulgierung","Kein Lipidmembran-Bestandteil (jedes Jahr falsch!)","Mesomeriestabilisierung = falsch (gesättigte Ringe)","Im Sauren: protoniert → unlöslich"],
+tr:"<strong>Falle 'im Sauren wasserlöslich':</strong> Cholsäure braucht die Deprotonierung (als Cholat-Salz) um löslich zu sein. Im Magen (sauer) fällt sie aus — das ist das Gegenteil von löslich. Diese Aussage taucht jedes Jahr auf und ist jedes Jahr falsch."},
+
+{tag:"CO-Vergiftung / Hämoglobin",bg:"#D1FAE5",tc:"#065f46",years:["2021","2022","2023","2024","2025"],
+mk:"CO bindet <strong>koordinativ</strong> (nicht kovalent!) und ~250× stärker als O₂ an <strong>Fe²⁺</strong> im Hämoglobin → <strong>verdrängt O₂ kompetitiv</strong>. <strong>Fe²⁺ bleibt +2</strong> (Fe³⁺ nur bei MetHb-Bildnern wie Nitriten). Bei O₂-Beatmung: CO wird <strong>verdrängt</strong>, nicht oxidiert. CO wirkt schon in kleinen Mengen.",
+vs:[
+{y:"2021",q:"Was trifft bei CO-Vergiftung zu?",os:[{t:"a) O₂ bindet stärker an Fe²⁺ als CO",ok:0},{t:"b) O₂ verdrängt bei Beatmung CO teilweise",ok:1},{t:"c) O₂ oxidiert CO zu CO₂",ok:0},{t:"d) O₂ bindet kovalent ans Zentralteilchen",ok:0},{t:"e) Fe ändert seine Konformationszahl",ok:0}]},
+{y:"2022",q:"Was trifft auf CO-Vergiftung zu?",os:[{t:"a) CO wird durch O₂ zu CO₂ oxidiert",ok:0},{t:"b) CO bindet kovalent ans Hämoglobin",ok:0},{t:"c) CO bindet besser ans Fe²⁺ als O₂",ok:1},{t:"d) CO oxidiert Fe²⁺ zu Fe³⁺",ok:0},{t:"e) CO bindet erst bei hoher Konzentration",ok:0}]},
+{y:"2023",q:"Welche Aussage trifft zu?",os:[{t:"a) CO verdrängt O₂ von der Bindungsstelle am Fe²⁺",ok:1},{t:"b) CO ändert Wertigkeit des Eisenatoms",ok:0},{t:"c) O₂ erst ab hohen CO-Mengen verdrängt",ok:0},{t:"d) Bei hohem O₂ wird CO zu CO₂ oxidiert",ok:0},{t:"e) CO bindet kovalent an das Eisenatom",ok:0}]},
+{y:"2024",q:"Was trifft auf CO-Vergiftung zu?",os:[{t:"a) Ligandenaustausch O₂ gegen CO",ok:1},{t:"b) CO → CO₂ bei O₂-Gabe",ok:0},{t:"c) O₂ bindet stärker an Fe²⁺",ok:0},{t:"d) CO₂ bindet kovalent an Fe²⁺",ok:0},{t:"e) O₂ erst bei hohen CO-Mengen verdrängt",ok:0}]},
+{y:"2025",q:"Welche Aussage zur CO-Vergiftung trifft zu?",os:[{t:"a) CO ändert die Wertigkeit des Eisenatoms",ok:0},{t:"b) O₂ wird erst ab hohen Mengen CO verdrängt",ok:0},{t:"c) Bei hohem O₂ wird CO zu CO₂ oxidiert",ok:0},{t:"d) CO verdrängt O₂ von der Bindungsstelle am Fe²⁺",ok:1},{t:"e) CO bindet kovalent an das Eisenatom",ok:0}]}],
+ps:['"CO bindet kovalent" = jedes Jahr falsch','"Fe²⁺→Fe³⁺" = jedes Jahr falsch (das ist MetHb)','"O₂ oxidiert CO zu CO₂" = jedes Jahr falsch',"Szenario wechselt (Brand 2021/25, Psychiatrie 2022/24)"],
+tr:"<strong>2024 Variante:</strong> 'Ligandenaustausch O₂ gegen CO' — klingt nach demselben Prinzip, aber Richtung beachten: CO verdrängt O₂ (nicht umgekehrt). Koordinativ = Donatorbindung, kein kovalentes Elektronenpaar geteilt."},
+
+{tag:"Vitamin C (Ascorbinsäure)",bg:"#DBEAFE",tc:"#1e3a8a",years:["2021","2022","2023","2024","2025"],
+mk:"Vitamin C kann ein stabiles Radikal bilden, das durch <strong>konjugierte Doppelbindungen im Lactonring mesomeriestabilisiert</strong> wird → Antioxidans. Ist <strong>L-konfiguriert</strong>. Hat <strong>2 chirale C-Atome</strong>. Enthält <strong>kein Acetal/Halbacetal</strong>. Ist <strong>wasserlöslich</strong> (polar), nicht fettlöslich. Enthält kein Amin.",
+vs:[
+{y:"2021",q:"Was trifft auf Vitamin C zu?",os:[{t:"a) Ist leicht oxidierbar",ok:1},{t:"b) Enthält ein Halbacetal",ok:0},{t:"c) Enthält 3 chirale C-Atome",ok:0},{t:"d) Enthält 3 tertiäre Alkohole",ok:0}]},
+{y:"2022",q:"Was trifft auf Vitamin C zu?",os:[{t:"A) Hat 3 chirale C-Atome",ok:0},{t:"B) Kann gut Radikale mesomeriestabilisieren",ok:1},{t:"C) Ist ein Strukturisomer der Glucose",ok:0},{t:"D) Enthält ein Vollacetal",ok:0},{t:"E) Ist das D-Enantiomer der Ascorbinsäure",ok:0}]},
+{y:"2024",q:"Was trifft auf Vitamin C zu?",os:[{t:"a) Primäre OH-Gruppe für Säurestärke verantwortlich",ok:0},{t:"b) Enthält ein Halbacetal",ok:0},{t:"c) Kann negative Ladung gut mesomeriestabilisieren",ok:1},{t:"d) Hat drei chirale Kohlenstoffatome",ok:0},{t:"e) Löst sich gut in pflanzlichen Ölen",ok:0}]},
+{y:"2025",q:"Was trifft auf Vitamin C zu?",os:[{t:"a) Löst sich gut in öligen Pflanzenfett",ok:0},{t:"b) Enthält Acetal",ok:0},{t:"c) Kann Radikale gut mesomeriestabilisieren",ok:1},{t:"d) Hat drei tertiäre Alkoholgruppen",ok:0},{t:"e) Enthält sekundäres Amin",ok:0}]}],
+ps:['"Radikale/Ladung mesomeriestabilisieren" = jedes Jahr richtig','"Halbacetal/Vollacetal" = jedes Jahr falsch','"3 chirale C-Atome" = falsch (sind 2)','Fettlöslich = falsch (wasserlöslich)'],
+tr:"<strong>Wording 2021 vs. 2022–25:</strong> 'Leicht oxidierbar' (2021) und 'Radikale mesomeriestabilisieren' (2022–25) beschreiben dieselbe Eigenschaft — VitC gibt ein Elektron ab und das entstehende Radikal wird durch den Ring stabilisiert."},
+
+{tag:"Phospholipide & Zellmembran",bg:"#DBEAFE",tc:"#1e3a8a",years:["2021","2022","2023","2024","2025"],
+mk:"Phospholipide: <strong>Glycerol + 2 Fettsäuren (Ester) + Phosphat + Kopfgruppe</strong>. Das abgebildete PE hat <strong>-NH₃⁺</strong> → <strong>kein quartäres N</strong> (quartäres N = 4 C-Substituenten am N, z.B. Cholin). Kohlenwasserstoffketten durch <strong>Van-der-Waals</strong>. <strong>Kein Phosphorsäureanhydrid</strong> (nur Phosphatester).",
+vs:[
+{y:"2021",q:"Phospholipid-Struktur: Was trifft zu?",os:[{t:"a) Enthält 3 Carbonsäureester",ok:0},{t:"b) Phosphatgruppe trägt wesentlich zur Polarität bei",ok:1},{t:"c) Enthält 2 gesättigte Fettsäuren",ok:0}]},
+{y:"2023",q:"Die abgebildete Verbindung…",os:[{t:"a) enthält zwei gesättigte Fettsäuren",ok:0},{t:"b) enthält ein quartäres Ammoniumion",ok:0},{t:"c) enthält zwei Phosphorsäureanhydride",ok:0},{t:"d) hat trans-konfigurierte C=C-Bindungen",ok:0},{t:"e) bildet eine Lipidmembran",ok:1}]},
+{y:"2025 Q1 — Phospholipid",q:"Was ist zutreffend?",os:[{t:"a) Enthält quartäres Ammoniumion",ok:0},{t:"b) Bildet Lipidmembranen",ok:1},{t:"c) Hat zwei gesättigte Fettsäuren",ok:0},{t:"d) C=C-Bindungen trans(E)-konfiguriert",ok:0},{t:"e) Enthält zwei Phosphorsäureanhydride",ok:0}]},
+{y:"2025 Q9 — Kräfte",q:"Womit werden Kohlenwasserstoffketten in Membranen zusammengehalten?",os:[{t:"a) Ionenbindung",ok:0},{t:"b) Wasserstoffbrücken",ok:0},{t:"c) Metallbindung",ok:0},{t:"d) Van-der-Waals-Wechselwirkung",ok:1},{t:"e) Elektronenpaarbindung",ok:0}]}],
+ps:['"Quartäres Ammonium" → falsch bei PE (NH₃⁺ ist primär)','"Van-der-Waals" hält Ketten zusammen (nicht H-Brücken!)','"2 Phosphorsäureanhydride" = falsch',"Lipidmembran = richtig"],
+tr:"<strong>Falle quartäres N:</strong> Cholin hat quartäres N (N⁺ mit 4 Kohlenstoffsubstituenten). Das abgebildete PE hat -O-CH₂-CH₂-NH₃⁺ → nur 3 H statt 3 Kohlenstoffe am N → primäres Ammonium. Im Bild erkennbar: kein N⁺(CH₃)₃."},
+
+{tag:"Thiole & Disulfidbrücken",bg:"#EDE9FE",tc:"#3B0764",years:["2021","2022","2023","2024","2025"],
+mk:"S-H <strong>schwächer und weniger polar</strong> als O-H → Thiole bilden <strong>kaum H-Brücken</strong> → niedrigerer Sdp. als Alkohole, schlechtere Wasserlöslichkeit. Thiole sind <strong>saurer</strong> als Alkohole (pKa ~10 vs. ~16). Mild oxidiert → <strong>Disulfid (-S-S-)</strong>. Stark oxidiert → <strong>Sulfonsäure (-SO₃H)</strong>.",
+vs:[
+{y:"2021",q:"Was trifft auf Thiole zu?",os:[{t:"a) Nur über starke Oxidationsmittel → Disulfidbrücken",ok:0},{t:"b) Sind starke Säuren",ok:0},{t:"c) Sind polarer als Alkohole",ok:0},{t:"d) Haben höhere Siedepunkte als Alkohole",ok:0},{t:"e) Können intermolekulare Disulfidbrücken bilden",ok:1}]},
+{y:"2022",q:"Was trifft auf Thiole zu?",os:[{t:"A) Können intermolekulare Disulfidbrücken bilden",ok:1},{t:"B) Höherer Siedepunkt als Alkohole",ok:0},{t:"C) Stärkere H-Brücken als Alkohole",ok:0},{t:"D) Weniger sauer als Alkohole",ok:0},{t:"E) Stärker polar als Alkohole",ok:0}]},
+{y:"2023",q:"Welche Aussage trifft auf Thiole zu?",os:[{t:"a) S-H-Bindung stärker als O-H-Bindung",ok:0},{t:"b) Lösen sich besser in Wasser (starke H-Brücken)",ok:0},{t:"c) Wasser als vergleichbare Alkohole",ok:0},{t:"d) Thiole weniger sauer als Alkohole",ok:0},{t:"e) Reagieren mit starken Oxidationsmitteln zu Sulfonsäuren",ok:1}]},
+{y:"2025",q:"Was trifft auf Thiole zu?",os:[{t:"a) S-H-Bindung stärker als O-H",ok:0},{t:"b) Lösen sich besser in Wasser",ok:0},{t:"c) Wasser als vergleichbare Alkohole",ok:0},{t:"d) Thiole weniger sauer als Alkohole",ok:0},{t:"e) Thiole werden leicht zu Disulfid oxidiert",ok:1}]}],
+ps:['"Höherer Siedepunkt als Alkohole" = jedes Jahr falsch','"Stärkere H-Brücken" = jedes Jahr falsch','"Weniger sauer als Alkohole" = jedes Jahr falsch',"Mild → Disulfid; stark → Sulfonsäure"],
+tr:"<strong>2023 vs. 2025:</strong> 2023 fragte nach starken Oxidationsmitteln (→ Sulfonsäuren), 2025 nach milden (→ Disulfide). Beide Aussagen korrekt, aber für verschiedene Bedingungen. Ohne Zusatz 'stark' → Disulfid ist die erwartete Antwort."},
+
+{tag:"Massenwirkungsgesetz & Gleichgewicht",bg:"#EDE9FE",tc:"#3B0764",years:["2021","2022","2023","2024","2025"],
+mk:"Edukt ↑ → GG nach rechts → <strong>Produkte ↑, andere Edukte ↓</strong>. <strong>K ändert sich nicht</strong> (nur bei Temperaturänderung!). Im GG: Konzentrationen konstant, <strong>Hin- = Rückreaktion</strong>, aber <strong>Reaktion findet weiter statt</strong>. <strong>K ≠ 1</strong>. Exotherme Reaktion + Temp.↑ → GG zu Edukten.",
+vs:[
+{y:"2021 — Zugabe von B",q:"Reaktion A + B ⇌ C + D: Was passiert wenn mehr B zugegeben wird?",os:[{t:"a) Es entsteht mehr D",ok:1},{t:"b) K nimmt proportional zu",ok:0},{t:"c) Rückreaktion wird begünstigt",ok:0},{t:"d) Konz. von C und D ändern sich nicht",ok:0},{t:"e) Zugabe von B hat keinen Einfluss",ok:0}]},
+{y:"2022/24 — Erhöhung A",q:"Wenn die Konzentration von A erhöht wird (K = C·D / A·B)…",os:[{t:"a) Erhöhen sich Konz. von A und B",ok:0},{t:"b) K erhöht sich",ok:0},{t:"c) Erhöhen sich Konz. von B, C und D",ok:0},{t:"d) Erhöhen sich Konz. von C und B",ok:0},{t:"e) Erhöhen sich Konz. von C und D",ok:1}]},
+{y:"2023/25 — GG Zuordnung",q:"Was trifft auf chemische Gleichgewichtsreaktionen zu? (Zuordnung trifft zu / trifft nicht zu)",os:[{t:"a) Es findet keine Reaktion mehr statt ✗ = trifft nicht zu",ok:0},{t:"b) Konzentration der Reaktionspartner bleibt konstant ✓",ok:1},{t:"c) Geschwindigkeit Hin- = Rückreaktion ✓",ok:1},{t:"d) K ist immer 1 ✗ = trifft nicht zu",ok:0}]},
+{y:"2025 Q14 — Erhöhung A",q:"Massenwirkungsgesetz, wenn Konz. von A erhöht wird?",os:[{t:"a) Konz. von C verringert sich",ok:0},{t:"b) Konz. von D verringert sich",ok:0},{t:"c) K ändert sich",ok:0},{t:"d) Konz. der Partner ändert sich nicht",ok:0},{t:"e) Konz. von B verringert sich",ok:1}]}],
+ps:['"K ändert sich" = falsch bei Konz.-Änderung','"Keine Reaktion mehr" = immer falsch','"K = 1" = immer falsch','Edukt ↑ → Produkte ↑ + andere Edukte ↓'],
+tr:"<strong>Falle 2025:</strong> 'Konz. von B verringert sich' wenn A erhöht wird — klingt kontraintuitiv, aber: wenn A und B beide Edukte sind, wird B verbraucht wenn das GG nach rechts verschoben wird. Edukt A ↑ → alle anderen Edukte ↓."},
+
+{tag:"Fehling-Probe & Zucker-Oxidation",bg:"#FEF3C7",tc:"#78350F",years:["2021","2022","2023","2024","2025"],
+mk:"Fehling positiv: <strong>aliphatische Aldehyde</strong>, <strong>Glucose</strong> (offene Form), <strong>Fructose</strong> (Keto-Enol-Tautomerie), <strong>Maltose</strong> (freie Halbacetalgruppe). <strong>Nicht oxidierbar:</strong> Saccharose (1→2-Verknüpfung, beide anomere OH verknüpft), Amylose/Stärke. Ketone nein — <strong>Ausnahme Fructose</strong>.",
+vs:[
+{y:"2021 — Welcher Stoff",q:"Welcher Stoff reagiert positiv mit der Fehling-Probe?",os:[{t:"a) 1-Propanol",ok:0},{t:"b) 2-Propanol",ok:0},{t:"c) Propanal",ok:1},{t:"d) Propansäure",ok:0},{t:"e) Propanon",ok:0}]},
+{y:"2021 — Fructose Begründung",q:"Warum reagiert Fructose mit Fehling positiv?",os:[{t:"a) Keto-Enol-Tautomerie → Aldehydform im GG",ok:1},{t:"b) Ketogruppe der Fructose direkt oxidierbar",ok:0},{t:"c) Fructose besitzt eine Aldehydgruppe",ok:0},{t:"d) Fehling ist ein starkes Oxidationsmittel",ok:0}]},
+{y:"2022/24 — Zuordnung",q:"Welche Zucker mit Fehling oxidierbar / nicht oxidierbar?",os:[{t:"Oxidierbar: Glucose, Fructose, Maltose",ok:1},{t:"Nicht oxidierbar: Saccharose, Amylose",ok:1}]},
+{y:"2025",q:"Welcher Stoff reagiert positiv auf die Fehling-Probe?",os:[{t:"a) Essigsäure",ok:0},{t:"b) Propanol",ok:0},{t:"c) Benzaldehyd",ok:1},{t:"d) 1-Propanol",ok:0},{t:"e) Milchsäure",ok:0}]}],
+ps:["Saccharose = immer nicht oxidierbar (1,2-Verknüpfung)","Fructose = oxidierbar (Tautomerie — Begründung lernen!)","Maltose = oxidierbar (freie Halbacetalgruppe)","Stärke/Amylose = nicht oxidierbar"],
+tr:"<strong>Saccharose-Falle:</strong> Saccharose = Glucose + Fructose — beide einzeln oxidierbar. Aber in Saccharose sind beide anomere OH in der 1,2-Bindung verknüpft → keine freie Halbacetalgruppe → Fehling negativ. Das ist das wichtigste Konzept."},
+
+{tag:"Periodensystem (PSE)",bg:"#FEF3C7",tc:"#78350F",years:["2021","2022","2023","2024","2025"],
+mk:"PSE geordnet nach <strong>Protonenzahl (Ordnungszahl)</strong>. <strong>Gruppe</strong> = gleiche Valenzelektronenzahl → ähnliche Eigenschaften. <strong>Periode</strong> = gleiches Hauptenergieniveau der Valenzelektronen. Element definiert durch <strong>Protonenzahl</strong>. EN: nimmt nach rechts und oben zu. Niedrigste EN: <strong>unten links</strong>. Nichtmetalle: <strong>oben rechts</strong>.",
+vs:[
+{y:"2021 — geringste EN",q:"Wo stehen Elemente mit der geringsten Elektronegativität?",os:[{t:"a) Oben rechts",ok:0},{t:"b) Oben links",ok:0},{t:"c) Unten rechts",ok:0},{t:"d) Unten links",ok:1},{t:"e) Irgendwas mit Hauptgruppen",ok:0}]},
+{y:"2022/24 — PSE-Ordnung",q:"Zuordnung: Nach welchen Kriterien ist das PSE geordnet?",os:[{t:"1. Massenzahl → falsch",ok:0},{t:"2. Elektronenkonfiguration → richtig",ok:1},{t:"3. Zeitpunkt der Entdeckung → falsch",ok:0},{t:"4. Ordnungszahl → richtig",ok:1},{t:"5. Aggregatzustand → falsch",ok:0}]},
+{y:"2025 — Nichtmetalle",q:"Wo stehen die Nichtmetalle im Periodensystem?",os:[{t:"a) Mittig",ok:0},{t:"b) Oben rechts",ok:1},{t:"c) Oben links",ok:0},{t:"d) Unten rechts",ok:0},{t:"e) Unten links",ok:0}]},
+{y:"2025 — Periode",q:"Was trifft auf eine Periode zu?",os:[{t:"a) Elemente haben ähnliche chem. Eigenschaften",ok:0},{t:"b) Gleiche Elektronenkonfiguration",ok:0},{t:"c) Gleiche Anzahl Valenzelektronen",ok:0},{t:"d) Valenzelektronen im gleichen Hauptenergieniveau",ok:1},{t:"e) Gleiche Massenzahl",ok:0}]},
+{y:"2025 — Element definiert durch",q:"Ein chemisches Element wird durch seine … definiert.",os:[{t:"a) Massenzahl",ok:0},{t:"b) Elektronenzahl",ok:0},{t:"c) Elektronengaskonfiguration",ok:0},{t:"d) Protonenzahl",ok:1},{t:"e) Kernladung (= Protonenzahl, auch richtig)",ok:1},{t:"f) Neutronenzahl",ok:0}]}],
+ps:['"Massenzahl definiert Element" = falsch (Isotope!)','Gruppe → ähnliche Eigenschaften','Periode → gleiches Hauptenergieniveau',"Nichtmetalle oben rechts, niedrigste EN unten links"],
+tr:"<strong>Klassische Verwechslung:</strong> Gruppe = ähnliche Eigenschaften (senkrecht). Periode = gleiches Energieniveau (waagerecht). Diese werden jedes Jahr als Distraktoren füreinander eingesetzt."},
+
+{tag:"Lokalanästhetika & pH-Effekte",bg:"#FCE7F3",tc:"#831843",years:["2021","2022","2023","2024","2025"],
+mk:"LA wirken als <strong>freie Base (unprotoniert)</strong> → membrangängig → Nervenzelle → wirken als <strong>Kation an Na⁺-Kanälen</strong>. Im entzündeten Gewebe (pH ↓) → mehr protoniert → <strong>schlechter membrangängig → weitgehend unwirksam</strong>. pKa näher an 7,4 → mehr freie Base → bessere Wirkung. <strong>pH ↓ um 1 = H⁺ × 10</strong>.",
+vs:[
+{y:"2021 — Lidocain",q:"Was trifft auf Lidocain zu?",os:[{t:"a) Gut im basischen löslich",ok:0},{t:"b) Kann nur protoniert aufgenommen werden",ok:0},{t:"c) Besitzt ein primäres Amin",ok:0},{t:"d) Liegt im Blut eher deprotoniert vor",ok:0},{t:"e) Im entzündeten Gewebe weitgehend unwirksam",ok:1}]},
+{y:"2023 — Warum unwirksam",q:"Warum wirken Lokalanästhetika nicht in entzündetem Gewebe?",os:[{t:"a) Im Sauren protoniert → nicht membrangängig",ok:1},{t:"b) Gut Membran passieren, wirken an Na-Kanälen",ok:0},{t:"c) Im Blut deprotoniert",ok:0},{t:"d) Nur in saurem pH membrangängig",ok:0},{t:"e) Im Basischen gut wasserlöslich",ok:0}]},
+{y:"2023/25 — pH-Berechnung",q:"pH-Wert sinkt von 7,4 auf 6,4. Wie verhält sich die H⁺-Konzentration?",os:[{t:"a) H⁺ erniedrigt sich um Faktor 10",ok:0},{t:"b) H⁺ erhöht um Faktor 2",ok:0},{t:"c) Konzentration bleibt unverändert",ok:0},{t:"d) H⁺ erniedrigt um Faktor 2",ok:0},{t:"e) H⁺ erhöht sich um Faktor 10",ok:1}]},
+{y:"2024 — Welches LA",q:"Welches LA wirkt am besten bei entzündeter Wunde?",os:[{t:"a) Lidocain pKa 7,9",ok:0},{t:"b) Procain pKa 8,9",ok:0},{t:"c) Ropivacain pKa 8,1",ok:0},{t:"d) ±0,5 um den Blut-pH beste Wirksamkeit",ok:0},{t:"e) Mepivacain pKa 7,7 (nächste am Gewebe-pH)",ok:1}]},
+{y:"2025 — Mepivacain",q:"Mepivacain pKa 7,6. Welche Aussage trifft zu?",os:[{t:"a) In protonierter Form membrangängig",ok:0},{t:"b) Enthält sekundäres Amin",ok:0},{t:"c) Im entzündeten Gewebe weitgehend unwirksam",ok:1},{t:"d) Im basischen gut wasserlöslich",ok:0},{t:"e) pH hat keinen Einfluss auf die Wirksamkeit",ok:0}]}],
+ps:["Protoniert = membranungängig (nicht gangängig!)","pH ↓ um 1 = H⁺ × 10 (immer logarithmisch)","pKa näher an 7,4 = mehr freie Base = bessere Wirkung","Entzündung → sauer → LA unwirksam"],
+tr:"<strong>Umkehrfalle:</strong> 'Protoniert = membrangängig' klingt logisch (positiv geladen = aktiv), ist aber genau falsch. Richtig: unprotoniert (neutral) = lipophil = membrangängig. Protoniert = wasserlöslich, aber kein Membrandurchtritt."},
+
+{tag:"Aminosäuren: IEP, L/D, Ladungsform",bg:"#FCE7F3",tc:"#831843",years:["2021","2022","2023","2024","2025"],
+mk:"<strong>IEP</strong> = Mittelwert der zwei pKa-Werte die das Zwitterion einschließen. Neutrale AS: (pKa1+pKa2)/2. <strong>Saure AS</strong> (Glu): (pKa1+pKa_Seitenkette)/2. <strong>Basische AS</strong> (Orn): (pKa2+pKa3)/2. <strong>pH &lt; IEP → Kation; pH = IEP → Zwitterion; pH &gt; IEP → Anion.</strong> Natürliche AS: <strong>L-konfiguriert</strong>.",
+vs:[
+{y:"2021 — Alanin pH 3",q:"IEP von L-Alanin = 6. In welcher Form liegt Alanin bei pH 3 vor?",os:[{t:"a) NH₃⁺-Form (Kation)",ok:1},{t:"b) COO⁻-Form (Anion)",ok:0},{t:"c) Zwitterion L-Form",ok:0},{t:"d) Zwitterion D-Form",ok:0},{t:"e) Andere",ok:0}]},
+{y:"2022 — IEP Berechnen",q:"IEP von Glutaminsäure berechnen (pKa1=2,1; pKa2=9,9; pKa3=4,3)",os:[{t:"Saure AS: IEP = (pKa1 + pKa_Seitenkette)/2 = (2,1+4,3)/2 = 3,2",ok:1}]},
+{y:"2024 — IEP Berechnen",q:"IEP von Ornithin berechnen (pKa1=1,94; pKa2=8,75; pKa3=10,8)",os:[{t:"Basische AS: IEP = (pKa2+pKa3)/2 = (8,75+10,8)/2 = 9,775",ok:1}]},
+{y:"2025 — Ornithin pH=IEP",q:"Welche Form der AS Ornithin liegt bei pH=9,775 vor?",os:[{t:"a) Kation",ok:0},{t:"b) Puffer",ok:0},{t:"c) Anion",ok:0},{t:"d) Zwitterion",ok:1},{t:"e) Dikation",ok:0}]},
+{y:"2025 — Selenocystein",q:"Bild von Selenocystein (COOH-CH(NH₂)-CH₂-SeH): Was trifft zu?",os:[{t:"a) In der β-Konfiguration dargestellt",ok:0},{t:"b) Reagiert basisch",ok:0},{t:"c) In der L-Konfiguration dargestellt",ok:1},{t:"d) Hat zwei C-Chirale",ok:0},{t:"e) Hat zwei IEPs",ok:0}]}],
+ps:["IEP-Formel je nach AS-Typ (sauer/neutral/basisch)","pH < IEP → Kation; pH > IEP → Anion","Natürliche AS = L-konfiguriert","Selenocystein = L (jedes Jahr wiederkehrend)"],
+tr:"<strong>Rechenformel je nach Typ:</strong> Glu (sauer) → pKa1 + pKa_Seitenkette (COOH). Orn (basisch) → pKa2 + pKa_Seitenkette (NH₃⁺). Falsch wäre (pKa1+pKa2)/2 für saure/basische AS."},
+
+{tag:"Chelatkomplexe & Koordination",bg:"#FEF3C7",tc:"#78350F",years:["2021","2022","2023","2024","2025"],
+mk:"<strong>Chelat</strong> = Ligand bindet mit <strong>≥2 Donoratomen</strong> an dasselbe Zentralatom (Ringbildung). Ethylendiamin (en) = 2-zähnig → Chelat. Porphyrin = 4-zähnig → Chelat. <strong>NH₃, CN⁻ = 1-zähnig → kein Chelat</strong>. Cisplatin: KZ=4, <strong>kein Chelat</strong> (NH₃ einzähnig). Hämoglobin: Fe²⁺ im Porphyrin, KZ=6.",
+vs:[
+{y:"2021 — Hämoglobin",q:"Frage zu Hämoglobin als Komplex: Was trifft zu?",os:[{t:"a) O₂ bindet kovalent an Fe²⁺",ok:0},{t:"b) Pyrrolring fungiert als mehrzähniger Chelatligand",ok:1},{t:"c) KZ von Fe²⁺ ist 4",ok:0},{t:"d) Ein sechszähniger Ligand bindet",ok:0}]},
+{y:"2022 — Cisplatin",q:"Cisplatin ist ein Krebsmedikament. Was trifft zu?",os:[{t:"A) Ist ein Chelatkomplex",ok:0},{t:"B) Platin hat die Oxidationszahl 0",ok:0},{t:"C) Platin hat die Ladung 0",ok:0},{t:"D) Liganden binden mit je einem Elektronenpaar",ok:1},{t:"E) Platin hat die Koordinationszahl 2",ok:0}]},
+{y:"2023–25 — Chelat markieren",q:"Chelatkomplex aus Optionen markieren (Strukturformeln gegeben):",os:[{t:"Cu²⁺ mit Ethylendiamin (en) = Chelat ✓",ok:1},{t:"[Co(NH₃)₆]³⁺ = kein Chelat (NH₃ einzähnig)",ok:0},{t:"[Fe(CN)₆]⁴⁻ = kein Chelat (CN⁻ einzähnig)",ok:0},{t:"Ni(CO)₄ = kein Chelat (CO einzähnig)",ok:0},{t:"[Au(CN)₂]⁻ = kein Chelat (CN⁻ einzähnig)",ok:0}]},
+{y:"2025 — Aludrox",q:"Aludrox [Al(OH)₂(H₂O)₄] ist ein Medikament bei Sodbrennen. Was trifft zu?",os:[{t:"a) Al hat genau 2 Liganden",ok:0},{t:"b) Al hat die Koordinationszahl 3",ok:0},{t:"c) Es ist ein Chelatkomplex",ok:0},{t:"d) Es kann H⁺-Ionen aufnehmen",ok:1},{t:"e) Al hat die Koordinationszahl 6",ok:0}]}],
+ps:["en (H₂N-CH₂-CH₂-NH₂) = immer Chelat","NH₃, CN⁻, CO = einzähnig = kein Chelat","Cisplatin = kein Chelat (KZ=4, NH₃ einzähnig)","O₂ bindet koordinativ (nicht kovalent)"],
+tr:"<strong>Cisplatin-Falle:</strong> Viele denken 'Medikament → muss Chelat sein'. Falsch — NH₃ ist einzähnig. Cisplatin hat KZ=4, Pt²⁺. Ein Chelat bräuchte z.B. einen zweizähnigen Liganden wie Oxalat oder en."},
+
+{tag:"Oxidationszahlen bestimmen",bg:"#D1FAE5",tc:"#065f46",years:["2021","2022","2023","2024","2025"],
+mk:"Regeln: O = <strong>−II</strong> (Peroxid: −I), H = <strong>+I</strong>, Summe = Ladung. <strong>SO₂</strong>: S=<strong>+IV</strong>. H₂SO₄: S=+VI. <strong>HNO₃</strong>: N=<strong>+V</strong>. NO₂: N=+IV. NO: N=+II. NH₃: N=−III. <strong>H₂O₂</strong>: O=<strong>−I</strong> (Peroxid!). S₂: S=0.",
+vs:[
+{y:"2021/22/23 — Schwefel",q:"Bei welchem Molekül hat Schwefel die Oxidationszahl +IV?",os:[{t:"a) SO₄²⁻ / H₂SO₄ (S=+VI)",ok:0},{t:"b) R-S-S-R / S₂ (S=0)",ok:0},{t:"c) SO₂",ok:1},{t:"d) H₂S (S=−II)",ok:0},{t:"e) SO₃ (S=+VI)",ok:0}]},
+{y:"2024 — Schwefel",q:"In welcher Verbindung hat Schwefel die Oxidationszahl +IV?",os:[{t:"A) S₂ (S=0)",ok:0},{t:"B) SO₂",ok:1},{t:"C) H₂SO₄ (S=+VI)",ok:0},{t:"D) H₂S (S=−II)",ok:0}]},
+{y:"2025 — Stickstoff",q:"In welcher Verbindung hat Stickstoff die Oxidationszahl +V?",os:[{t:"a) NO₂ (N=+IV)",ok:0},{t:"b) HNO₃",ok:1},{t:"c) NO (N=+II)",ok:0},{t:"d) N₂ (N=0)",ok:0},{t:"e) NH₃ (N=−III)",ok:0}]},
+{y:"2025 Q39 — H₂O₂",q:"2 H₂O₂ ⇌ O₂ + 2 H₂O: Was trifft zu?",os:[{t:"a) OZ Wasserstoff verändert sich",ok:0},{t:"b) OZ Sauerstoff: −I → −II und 0",ok:1},{t:"c) Es werden 6 Elektronen übertragen",ok:0},{t:"d) Komproportionierung",ok:0},{t:"e) Wasserstoff reduziert Sauerstoff",ok:0}]}],
+ps:["SO₂ = +IV (Standardantwort S-Fragen, jedes Jahr)","HNO₃ = +V (Standardantwort N-Fragen)","H₂SO₄ = +VI (häufig als Distraktor)","H₂O₂ = Peroxid → O hat −I (nicht −II!)"],
+tr:"<strong>Peroxid-Sonderfall:</strong> In H₂O₂ hat O die OZ −I (nicht −II). Das ist der Schlüssel zur Disproportionierungsfrage: O geht von −I zu 0 (O₂, Oxidation) und −I zu −II (H₂O, Reduktion) → ein Stoff wird gleichzeitig oxidiert und reduziert."},
+
+{tag:"Disaccharide: Lactose, Maltose, Saccharose",bg:"#D1FAE5",tc:"#065f46",years:["2021","2022","2023","2024","2025"],
+mk:"<strong>Lactose</strong> = Glucose + Galactose, β-1,4. <strong>Maltose</strong> = α-Glucose + α-Glucose, α-1,4, freie Halbacetalgruppe → Fehling positiv. <strong>Saccharose</strong> = α-Glucose + β-Fructose, 1,2-Verknüpfung, keine freie Halbacetalgruppe → <strong>Fehling negativ</strong>. Lactoseintoleranz: fehlende Lactase → Osmose ↑ + Bakterien-CO₂.",
+vs:[
+{y:"2021/24/25 — Spaltprodukte",q:"In was wird Laktose gespalten?",os:[{t:"a) Glucose + Fructose",ok:0},{t:"b) Glucose + Mannose",ok:0},{t:"c) Glucose + Galactose",ok:1},{t:"d) Glucose + Glucose",ok:0},{t:"e) Galactose + Fructose",ok:0}]},
+{y:"2021 — Maltose",q:"Welche Aussage zur Maltose ist richtig?",os:[{t:"a) 1-2-glycosidisch gebunden",ok:0},{t:"b) Reagiert negativ mit Fehling",ok:0},{t:"c) Besteht aus Galactose+Glucose",ok:0},{t:"d) β-glycosidisch gebunden",ok:0},{t:"e) Maltose enthält eine Halbacetalgruppe",ok:1}]},
+{y:"2022 — Maltose",q:"Was trifft auf Maltose zu?",os:[{t:"A) 1-2-glycosidisch verbunden",ok:0},{t:"B) α-Glucose + β-Fructose",ok:0},{t:"C) Besteht aus zwei α-D-Glucosen",ok:1},{t:"D) Ist Bestandteil von Cellulose",ok:0},{t:"E) Durch Amylose spaltbar",ok:0}]},
+{y:"2023 — Saccharose",q:"Was trifft auf Saccharose zu?",os:[{t:"a) Verbindung α-D-Glucose + β-D-Galactose",ok:0},{t:"b) Disaccharid aus Ketose + Aldose",ok:1},{t:"c) Durch Amylase spaltbar",ok:0},{t:"d) Spaltprodukt der Stärke",ok:0},{t:"e) Hat eine glycosidische Hydroxygruppe",ok:0}]}],
+ps:["Lactose = Glucose + Galactose (nicht Fructose!)","Maltose = Fehling positiv (freie Halbacetal)","Saccharose = Fehling negativ (1,2-Verknüpfung)","Laktoseintoleranz: fehlende Lactase im Darm"],
+tr:"<strong>Verwechslungsgefahr:</strong> Glucose + Fructose = Saccharose (Haushaltszucker). Glucose + Galactose = Lactose (Milchzucker). Eselsbrücke: Lact- (wie Lactat/Milch) → Galactose steckt in der Milch."},
+
+{tag:"Disproportionierung (H₂O₂, Iod)",bg:"#D1FAE5",tc:"#065f46",years:["2021","2022","2023","2024","2025"],
+mk:"<strong>Disproportionierung</strong> = ein Element aus demselben Stoff gleichzeitig oxidiert und reduziert. <strong>H₂O₂:</strong> O geht von −I → 0 (O₂) und −I → −II (H₂O) → Disproportionierung. <strong>Iod IO₃⁻ + 5I⁻ + 6H⁺ → 3I₂:</strong> IO₃⁻ (I=+V) reduziert, I⁻ (I=−I) oxidiert → <strong>keine Disproportionierung</strong> (2 verschiedene Edukte). Nur unter sauren Bedingungen (6H⁺).",
+vs:[
+{y:"2021 — H₂O₂",q:"4 H₂O₂ → 2 O₂ + 2 H₂O: Was trifft zu?",os:[{t:"a) Disproportionierungsreaktion",ok:1},{t:"b) Sauerstoff wird abgebaut",ok:0},{t:"c) Komproportionierung",ok:0}]},
+{y:"2021/23/24 — Iod-Reaktion",q:"IO₃⁻ + 5I⁻ + 6H⁺ ⇌ 3I₂ + 3H₂O: Was trifft zu?",os:[{t:"a) I⁻ ist das Oxidationsmittel",ok:0},{t:"b) Ist eine Disproportionierung",ok:0},{t:"c) Das Iod ändert seine Oxidationszahl",ok:1},{t:"d) pH-unabhängig",ok:0},{t:"e) Funktioniert nur im basischen Milieu",ok:0}]},
+{y:"2025 Q10 — Iod",q:"IO₃⁻ + 5I⁻ + 6H⁺ → 3I₂ + 3H₂O: Was trifft zu?",os:[{t:"a) I⁻ ist das Oxidationsmittel",ok:0},{t:"b) Ist eine Disproportionierung",ok:0},{t:"c) Nur unter sauren Bedingungen möglich",ok:1},{t:"d) I⁻ und IO₃⁻ bilden ein Redoxpaar",ok:0},{t:"e) 6 Elektronen werden übertragen",ok:0}]},
+{y:"2025 Q39 — H₂O₂",q:"2 H₂O₂ ⇌ O₂ + 2 H₂O: Was trifft zu?",os:[{t:"a) OZ des Wasserstoffs verändert sich",ok:0},{t:"b) OZ des Sauerstoffs: −I auf −II und 0",ok:1},{t:"c) 6 Elektronen übertragen",ok:0},{t:"d) Komproportionierung",ok:0},{t:"e) Wasserstoff reduziert Sauerstoff",ok:0}]}],
+ps:["H₂O₂ = Disproportionierung (O: −I→0 und −I→−II)","Iod-Reaktion = KEINE Disproportionierung","I⁻ = Reduktionsmittel (wird oxidiert, nicht Oxidationsmittel)","6H⁺ → nur im Sauren"],
+tr:"<strong>Iod ≠ Disproportionierung:</strong> Bei echter Disproportionierung muss derselbe Stoff gleichzeitig oxidiert und reduziert werden. Hier sind IO₃⁻ und I⁻ zwei verschiedene Ausgangsverbindungen. I⁻ (−I → 0) wird oxidiert = ist das Reduktionsmittel (wird fälschlicherweise oft als Oxidationsmittel bezeichnet)."}
+],
+
+2:[
+{tag:"Proteinstruktur I–IV",bg:"#DBEAFE",tc:"#1E3A8A",years:["2022","2023","2024","2025"],
+mk:"<strong>Primär</strong> = AS-Sequenz, kovalente Peptidbindungen (bleibt bei Denaturierung!). <strong>Sekundär</strong> = α-Helix, β-Faltblatt → <strong>H-Brücken</strong> zwischen Peptidbindungen. <strong>Tertiär</strong> = 3D-Faltung → hydrophobe WW + <strong>Disulfidbrücken</strong>. <strong>Quartär</strong> = mind. <strong>2 Untereinheiten</strong> (Hämoglobin=4). Denaturierung 42–44°C: <strong>irreversibel</strong>, Sekundär/Tertiär weg, Primär intakt.",
+vs:[
+{y:"2022 — Disulfidbrücken",q:"Was wird vor allem durch Disulfidbrücken stabilisiert?",os:[{t:"A) Phospholipid-Strukturen",ok:0},{t:"B) Tertiärstruktur von Proteinen",ok:1},{t:"C) Basen der DNA",ok:0},{t:"D) Kollagen",ok:0}]},
+{y:"2023 — Temperaturerhöhung",q:"Was passiert mit Proteinen bei 42–44°C?",os:[{t:"a) Peptidbindung wird drehbar",ok:0},{t:"b) Proteine denaturieren irreversibel",ok:1},{t:"c) Peptidbindung löst sich",ok:0},{t:"d) Primärstruktur wird zerstört",ok:0},{t:"e) Proteine funktionieren besser",ok:0}]},
+{y:"2024 — Sekundärstruktur",q:"Wodurch kommt die α-Helix/β-Faltblatt-Struktur zustande?",os:[{t:"a) Van-der-Waals-Kräfte",ok:0},{t:"b) Hydrophobe Wechselwirkungen",ok:0},{t:"c) Disulfidbrücken",ok:0},{t:"d) Kovalente Bindung",ok:0},{t:"e) Wasserstoffbrückenbindungen",ok:1}]},
+{y:"2025",q:"Welche Aussage trifft auf die Proteinstruktur zu?",os:[{t:"a) Tertiärstrukturen sind α- und β-Helices",ok:0},{t:"b) Quartärstruktur braucht mind. 2 Untereinheiten",ok:1},{t:"c) Hydrophobe WW stabilisieren Primärstruktur",ok:0},{t:"d) Primärstrukturen durch H-Brücken bestimmt",ok:0},{t:"e) AS-Abfolge ohne Auswirkung auf Struktur",ok:0}]}],
+ps:["Quartär = mind. 2 Untereinheiten (Hämoglobin=4)","Disulfid → Tertiärstruktur","α-Helix/β-Faltblatt = Sekundär (nicht Tertiär!)","Primär bleibt bei Denaturierung intakt"],
+tr:"<strong>Falle:</strong> α-Helix und β-Faltblatt sind Sekundärstrukturen — nicht Tertiär! Tertiärstruktur = die gesamte räumliche Faltung durch hydrophobe WW, Disulfidbrücken etc."},
+
+{tag:"Stärke & Cellulose",bg:"#D1FAE5",tc:"#064E3B",years:["2021","2022","2024","2025"],
+mk:"<strong>Stärke</strong> = <strong>α-Glucose</strong>, α-1,4-Verknüpfung + α-1,6-Verzweigungen. Hydrolysierbar durch <strong>α-Amylase</strong> (schon im Mund!). Kein Fehling. <strong>Cellulose</strong> = <strong>β-Glucose</strong>, β-1,4-Verknüpfung → <strong>Ballaststoff</strong> (für Menschen unverdaulich), H-Brücken halten Ketten. Stärke = pflanzlicher Reservezucker (tierisch = Glykogen).",
+vs:[
+{y:"2021 — Amylose",q:"Amylose: Was trifft zu?",os:[{t:"a) Kann im Mund durch Amylase in Maltose gespalten werden",ok:1},{t:"b) Besteht aus Beta 1-4 verknüpfter Glucose",ok:0},{t:"c) Besteht aus Alpha 1-6 verknüpfter Glucose",ok:0},{t:"d) Häufigster tierischer Reservespeicher mit Amylopektin",ok:0},{t:"e) Ist ein Ballaststoff",ok:0}]},
+{y:"2022/24/25 — Stärke",q:"Was trifft auf Stärke zu?",os:[{t:"a) Stärke ist ein Ballaststoff",ok:0},{t:"b) Durch Fehling oxidierbar",ok:0},{t:"c) Spaltung wird durch Alpha-Amylase katalysiert",ok:1},{t:"d) Stärke besteht aus β-Glucose-Einheiten",ok:0},{t:"e) Stärke lässt sich mit Fehling oxidieren",ok:0}]},
+{y:"2023 — Cellulose",q:"Was trifft auf Cellulose zu?",os:[{t:"a) Wichtigster Reservezucker in Pflanzen",ok:0},{t:"b) Über α-1-4-Verbindungen verknüpft",ok:0},{t:"c) Mit Fehling oxidierbar",ok:0},{t:"d) Zuckerketten durch H-Brücken eng zusammen",ok:1},{t:"e) Von Amylase im Speichel hydrolysierbar",ok:0}]},
+{y:"Alle Jahre — Zuordnung",q:"Fehling-Zuordnung (wiederkehrend jedes Jahr):",os:[{t:"Nicht oxidierbar: Amylose, Saccharose",ok:1},{t:"Oxidierbar: Glucose, Fructose, Maltose",ok:1}]}],
+ps:["Stärke = α-Glucose; Cellulose = β-Glucose","α-Amylase spaltet Stärke, nicht Cellulose","Cellulose = Ballaststoff (nicht Stärke!)","Stärke: Fehling negativ"],
+tr:"<strong>Ballaststoff-Falle:</strong> Cellulose ist der Ballaststoff, nicht Stärke! Die β-1,4-Bindung ist für menschliche Amylase unsichtbar. 'Stärke ist ein Ballaststoff' = jedes Jahr falscher Distraktor."},
+
+{tag:"Standardpotenziale (Zn, Fe, Cu)",bg:"#F3F4F6",tc:"#1F2937",years:["2021","2022","2023","2024"],
+mk:"Negativeres E° = <strong>unedler</strong> = stärkeres Reduktionsmittel. Reihenfolge: Zn (−0,76 V) &lt; Fe (−0,44 V) &lt; H₂ (0 V) &lt; Cu (+0,34 V). Negatives E° → reagiert mit starken Säuren unter <strong>H₂-Bildung</strong>. Cu = positiv = edel → kein HCl-Angriff. Edelmetall = positives Standardpotenzial.",
+vs:[
+{y:"2021",q:"(Zn −0,76; Fe −0,44; Cu +0,34): Welche Aussage trifft zu?",os:[{t:"a) Zink hat höheres Oxidationspotenzial als Kupfer",ok:0},{t:"b) Zink reagiert mit starken Säuren unter H₂-Bildung",ok:1},{t:"c) Zink ist ein Edelmetall",ok:0},{t:"d) Zink ist edler als Eisen",ok:0},{t:"e) Zink kann Kupfer oxidieren",ok:0}]},
+{y:"2022",q:"(Zn −0,76; Fe −0,44; Cu +0,35): Welche Aussage trifft zu?",os:[{t:"a) Eisen kann Zink²⁺ oxidieren",ok:0},{t:"b) Eisen ist ein Edelmetall",ok:0},{t:"c) Eisen reagiert mit starken Säuren unter H₂-Bildung",ok:1},{t:"d) Kupfer wird von Eisen oxidiert",ok:0}]},
+{y:"2023",q:"(Zn −0,76; Fe −0,44; Cu +0,34): Welche Aussage trifft zu?",os:[{t:"a) Zink hat höheres Oxidationspotenzial als Kupfer",ok:0},{t:"b) Zink reagiert mit starken Säuren unter H₂-Bildung",ok:1},{t:"c) Zink ist ein Edelmetall",ok:0},{t:"d) Zink ist edler als Eisen",ok:0},{t:"e) Zink kann Kupfer oxidieren",ok:0}]},
+{y:"2024",q:"(Zn −0,76; Cu +0,15; Fe +0,77): Welche Aussage trifft zu?",os:[{t:"a) Zink hat das größte Oxidationspotenzial",ok:0},{t:"b) Zink ist ein Edelmetall",ok:0},{t:"c) Zink ist edler als Kupfer",ok:0},{t:"d) Zink kann durch starke Säure reduziert werden",ok:0},{t:"e) Zink reagiert mit starker Säure unter H₂-Bildung",ok:1}]}],
+ps:['"Zink ist Edelmetall" = jedes Jahr falsch','"Zink edler als Fe/Cu" = jedes Jahr falsch',"Zn UND Fe reagieren mit Säuren (negatives E°)","Cu reagiert nicht mit HCl"],
+tr:"<strong>2024 andere Werte:</strong> Eisen hatte hier +0,77 V (ungewöhnlich — vielleicht Fe³⁺/Fe²⁺-Paar). Dennoch: Zink hat das negativste Potential → unedelst → reagiert mit Säuren. Das Prinzip gilt unabhängig von den genauen Zahlenwerten."},
+
+{tag:"Monosaccharide: Ringschluss & α/β",bg:"#FEF3C7",tc:"#78350F",years:["2021","2023","2024","2025"],
+mk:"Ringschluss = <strong>Halbacetalbildung</strong> → <strong>neues Chiralitätszentrum</strong> am anomeren C (→ α oder β). <strong>α</strong>: OH axial (trans zu CH₂OH). <strong>β</strong>: OH äquatorial. Anomere stehen in Lösung im <strong>GG</strong> (Mutarotation). Fructose = <strong>Ketohexose</strong> = <strong>Strukturisomer</strong> von Glucose (C₆H₁₂O₆). Keto-Enol-Tautomerie → Fehling.",
+vs:[
+{y:"2021 — Fructose/Fehling",q:"Warum reagiert Fructose mit Fehling positiv?",os:[{t:"a) Keto-Enol-Tautomerie → Aldehydform im GG",ok:1},{t:"b) Ketogruppe der Fructose direkt oxidierbar",ok:0},{t:"c) Fructose besitzt eine Aldehydgruppe",ok:0},{t:"d) Fehling ist ein starkes Oxidationsmittel",ok:0}]},
+{y:"2023 — Ringschluss",q:"Was trifft auf den Ringschluss bei Monosacchariden zu?",os:[{t:"a) Es entsteht ein cyclisches Acetal",ok:0},{t:"b) Es entsteht ein neues Chiralitätszentrum",ok:1},{t:"c) Erfolgt nur bei Aldosen",ok:0},{t:"d) Es reagieren zwei OH-Gruppen miteinander",ok:0},{t:"e) Es ergibt sich immer eine Pyranose",ok:0}]},
+{y:"2024 — Ringschluss",q:"Was trifft auf den Ringschluss zu?",os:[{t:"a) Erfolgt nur bei Aldosen",ok:0},{t:"b) C-H reagieren miteinander",ok:0},{t:"c) Braucht immer Wasser",ok:0},{t:"d) Ein Chiralitätszentrum geht verloren",ok:0},{t:"e) Im Gleichgewicht mit der offenen Form",ok:1}]},
+{y:"2025 — Fructose",q:"Was trifft auf Fructose zu?",os:[{t:"a) C2–C5 sind chirale C-Atome",ok:0},{t:"b) Fructose ist ein Strukturisomer von Glucose",ok:1},{t:"c) Es ist eine Aldose",ok:0},{t:"d) Es ist eine Pentose",ok:0},{t:"e) Sie ist L-konfiguriert",ok:0}]}],
+ps:["Ringschluss auch bei Ketosen (Fructose = Furanose)","Neues Chiralitätszentrum = anomeres C","Anomere im GG in Lösung (Mutarotation)","Fructose = Ketohexose, Strukturisomer von Glucose"],
+tr:"<strong>Falle 'nur Aldosen':</strong> Ketosen bilden ebenfalls Ringe (Halbketal statt Halbacetal). Fructose bildet einen 5-Ring (Furanose). Diese Aussage ist jedes Jahr als Distraktor dabei — immer falsch."},
+
+{tag:"Isomerie: Enantiomere, Anomere, Epimere",bg:"#FCE7F3",tc:"#831843",years:["2021","2022","2023","2024","2025"],
+mk:"<strong>Enantiomere</strong> = alle Chiralitätszentren invertiert (D/L). <strong>Epimere</strong> = nur 1 Zentrum verschieden (Glu/Gal = C4-Epimere). <strong>Anomere</strong> = Epimere am anomeren C (α/β). <strong>Im GG in Lösung:</strong> Anomere + Keto-Enol-Tautomere. <strong>Nicht im GG:</strong> Enantiomere, Epimere, Cis/Trans.",
+vs:[
+{y:"2021 — D und L",q:"D- und L-Glucose sind:",os:[{t:"a) Diastereomere",ok:0},{t:"b) Anomere",ok:0},{t:"c) Enantiomere",ok:1},{t:"d) Konomere",ok:0},{t:"e) Epimere",ok:0}]},
+{y:"2022/24 — Im GG",q:"Was liegt in wässriger Lösung im Gleichgewicht vor?",os:[{t:"A) Enantiomere",ok:0},{t:"B) Diastereoisomere",ok:0},{t:"C) Anomere",ok:1},{t:"D) Epimere",ok:0},{t:"E) D/L Stereoisomere",ok:0}]},
+{y:"2025 Q37 — Zuordnung",q:"Was steht in Lösungen im Gleichgewicht? (Zuordnung)",os:[{t:"Im GG: α/β-Anomere der Saccharide",ok:1},{t:"Im GG: Keto-Enol-Tautomere",ok:1},{t:"Nicht im GG: D/L-Aminosäuren",ok:0},{t:"Nicht im GG: Cis/Trans-Isomere",ok:0},{t:"Nicht im GG: Enantiomere bei Kohlenhydraten",ok:0}]},
+{y:"2025 Q40 — Ribose Fischer",q:"Zwei Ribosen in Fischer-Projektion: alle OH-Gruppen gespiegelt. Was trifft zu?",os:[{t:"a) Anomere",ok:0},{t:"b) Ketohexose",ok:0},{t:"c) Diastereomere",ok:0},{t:"d) Enantiomere",ok:1},{t:"e) Epimere",ok:0}]}],
+ps:["Anomere = GG in Lösung (Mutarotation)","D/L = Enantiomere (alle Zentren invertiert)","Epimere = nur 1 Zentrum verschieden","Cis/Trans = kein GG in Lösung"],
+tr:"<strong>Epimere vs. Enantiomere:</strong> Alle Zentren invertiert = Enantiomere. Nur 1 Zentrum verschieden = Epimere. Anomere sind Spezialfall der Epimere. Diese drei Begriffe werden am häufigsten als gegenseitige Distraktoren eingesetzt."},
+
+{tag:"Phenol vs. Cyclohexanol",bg:"#ECFDF5",tc:"#064E3B",years:["2021","2023","2025"],
+mk:"Phenol: OH direkt am <strong>aromatischen Ring</strong> → Elektronenpaar ins π-System → <strong>mehr mesomere Grenzstrukturen</strong> → Phenol <strong>saurer</strong> (pKa ~10) als Cyclohexanol (pKa ~16). Keine Strukturisomere (C₆H₅OH ≠ C₆H₁₁OH). Cyclohexanol = sekundärer Alkohol. Nur Phenol hat Benzolring.",
+vs:[
+{y:"2021",q:"Abbildung Phenol & Cyclohexanol: Was trifft zu?",os:[{t:"a) Sind beides Alkohole",ok:0},{t:"b) Sind Stereoisomere",ok:0},{t:"c) Cyclohexanol ist schwache Säure im Gegensatz zu Phenol",ok:0},{t:"d) Phenol hat mehr mesomere Strukturen als Cyclohexanol",ok:1},{t:"e) Phenol oxidiert besser als Cyclohexanol",ok:0}]},
+{y:"2023",q:"Welche Aussage zu Phenol und Cyclohexanol trifft zu?",os:[{t:"a) Cyclohexanol und Phenol sind Strukturisomere",ok:0},{t:"b) Cyclohexanol ist schwache Säure im Gegensatz zu Phenol",ok:0},{t:"c) Phenol lässt sich besser oxidieren als Cyclohexanol",ok:0},{t:"d) Phenol hat mehr mesomere Grenzstrukturen als Cyclohexanol",ok:1},{t:"e) Phenol und Cyclohexanol sind Alkohole",ok:0}]},
+{y:"2025",q:"Welche Aussage zu Phenol und Cyclohexanol trifft zu?",os:[{t:"a) Phenol hat mehr mesomere Grenzstrukturen als Cyclohexanol",ok:1},{t:"b) Beides primäre Alkohole",ok:0},{t:"c) Cyclohexanol ist saurer als Phenol",ok:0},{t:"d) Beide weisen aromatisches Ringsystem auf",ok:0},{t:"e) Es handelt sich um Stereoisomere",ok:0}]}],
+ps:['"Mehr mesomere Grenzstrukturen" = jedes Jahr richtig',"Phenol saurer (pKa ~10 vs. ~16)",'"Strukturisomere" = falsch (verschiedene Formeln)','"Beide aromatisch" = falsch (nur Phenol)'],
+tr:"<strong>Falle 'beide aromatisch':</strong> Cyclohexanol hat einen gesättigten 6-Ring — kein Aromat! Cyclohexanol ist außerdem sekundär (OH sitzt an einem Ring-C), nicht primär."},
+
+{tag:"Aldehyde & Ketone",bg:"#ECFDF5",tc:"#064E3B",years:["2021","2022","2024","2025"],
+mk:"<strong>Aldehyde</strong>: Carbonylgruppe an <strong>C1</strong>. Aus <strong>primären Alkoholen</strong>. Weiter oxidierbar zu <strong>Carbonsäuren</strong>. Fehling positiv. <strong>Ketone</strong>: Carbonylgruppe nicht-terminal. Aus <strong>sekundären Alkoholen</strong>. <strong>Nicht</strong> zu Carbonsäure oxidierbar. Fehling negativ. Beide: <strong>keine H-Brücken untereinander</strong> (kein H-Donor).",
+vs:[
+{y:"2021 — Fehling",q:"Welcher Stoff reagiert positiv mit der Fehling-Probe?",os:[{t:"a) 1-Propanol",ok:0},{t:"b) 2-Propanol",ok:0},{t:"c) Propanal",ok:1},{t:"d) Propansäure",ok:0},{t:"e) Propanon",ok:0}]},
+{y:"2022 — Reduktion",q:"Was entsteht bei der Reduktion von Propanal?",os:[{t:"a) 1-Propanol",ok:1},{t:"b) Essigsäure",ok:0},{t:"c) 2-Propanol",ok:0},{t:"d) 1-Butanol",ok:0},{t:"e) 2-Butanol",ok:0}]},
+{y:"2024 — Aldehyde",q:"Was trifft auf Aldehyde zu?",os:[{t:"a) Lassen sich gut zu Carbonsäuren oxidieren",ok:1},{t:"b) Entstehen aus sekundären Alkoholen",ok:0},{t:"c) Werden zu Halbacetalen oxidiert",ok:0},{t:"d) Haben nicht-endständige Carbonylgruppe",ok:0},{t:"e) Bilden untereinander starke H-Brücken",ok:0}]},
+{y:"2025 — Ketone",q:"Was trifft auf Ketone zu?",os:[{t:"a) Haben Carbonylgruppe an C1",ok:0},{t:"b) Bilden untereinander H-Brückenbindungen",ok:0},{t:"c) Lassen sich zu Carbonsäuren oxidieren",ok:0},{t:"d) Sind Oxidationsprodukte sekundärer Alkohole",ok:1},{t:"e) Entstehen durch Oxidation primärer Alkohole",ok:0}]}],
+ps:["Aldehyd = C1, primär → Aldehyd → Carbonsäure","Keton = sekundär → Keton → STOP (kein Fehling)","Keine H-Brücken untereinander (kein OH)","'Ketone → Carbonsäuren' = jedes Jahr falscher Distraktor"]  ,
+tr:"<strong>Oxidationskette:</strong> Primärer Alkohol → Aldehyd → Carbonsäure. Sekundärer Alkohol → Keton → Ende. 'Ketone lassen sich zu Carbonsäuren oxidieren' taucht jedes Jahr auf — immer falsch."}
+],
+
+3:[
+{tag:"Ketonkörper & Azidose",bg:"#FEF3C7",tc:"#78350F",years:["2021","2023","2025"],
+mk:"3 Ketonkörper: <strong>β-Hydroxybuttersäure</strong>, <strong>Acetessigsäure</strong>, <strong>Aceton</strong> (Propanon). Azidose nur durch <strong>Säuren</strong>: β-Hydroxybuttersäure + Acetessigsäure. <strong>Aceton = Keton → keine Säure → keine Azidose</strong> (aber Acetongeruch!). Alle entstehen aus <strong>Fettsäurestoffwechsel</strong> bei Hunger/Diabetes.",
+vs:[
+{y:"2023",q:"Bei Hungerphasen und Diabetes liegen alle drei vor. Welche Aussage trifft auf alle zu?",os:[{t:"a) Alle enthalten eine Ketogruppe",ok:0},{t:"b) Alle enthalten eine Carbonsäuregruppe",ok:0},{t:"c) Alle verursachen metabolische Azidose",ok:0},{t:"d) Die Verbindungen entstehen aus dem Fettsäurestoffwechsel",ok:1},{t:"e) Sind Stoffwechselendprodukte, können nicht verwertet werden",ok:0}]},
+{y:"2025",q:"Welche Ketonkörper machen eine Azidose?",os:[{t:"a) Nur β-Hydroxybuttersäure",ok:0},{t:"b) β-Hydroxybuttersäure und Acetessigsäure",ok:1},{t:"c) Propanon und Acetessigsäure",ok:0},{t:"d) Propanon und β-Hydroxybuttersäure",ok:0},{t:"e) Alle drei",ok:0}]},
+{y:"2021",q:"(Gleiche drei Verbindungen) Welche Aussage trifft auf alle drei zu?",os:[{t:"a) Alle enthalten Ketogruppe",ok:0},{t:"b) Alle enthalten Carbonsäuregruppe",ok:0},{t:"c) Alle verursachen metabolische Azidose",ok:0},{t:"d) Entstehen aus Fettsäurestoffwechsel",ok:1},{t:"e) Sind Stoffwechselendprodukte",ok:0}]}],
+ps:["Aceton = Keton = keine Säure = keine Azidose","β-OH-Buttersäure + Acetessigsäure = Azidose",'"Alle drei verursachen Azidose" = immer falsch',"Alle drei: aus Fettstoffwechsel (das trifft auf alle zu)"],
+tr:"<strong>Falle 'alle drei':</strong> Aceton (Propanon) ist ein Keton ohne sauren Wasserstoff — kann keinen H⁺ abgeben → keine Azidose. Trotzdem Ketonkörper und verursacht den typischen Acetongeruch bei Diabetikern/Fastenden."},
+
+{tag:"Wasserstoffbrücken & Bindungstypen",bg:"#EDE9FE",tc:"#3B0764",years:["2022","2023","2024"],
+mk:"<strong>H-Brücken</strong>: H-Donor (OH, NH) + H-Akzeptor (O, N, F). H hat <strong>positive</strong> Partialladung (δ+)! Stärker als VdW, schwächer als kovalente Bindung und Ionenbindung. <strong>Van-der-Waals</strong>: in allen Molekülen (auch unpolaren Alkanen!), bestimmt Sdp. der Alkane. Wasser: <strong>4 H-Brücken</strong> (nicht 6!). NaCl = Ionenbindung.",
+vs:[
+{y:"2022 — H-Brücken",q:"Wasserstoffbrückenbindungen: Was trifft zu?",os:[{t:"a) OH und NH₂ sind gute Protonendonatoren",ok:1},{t:"b) Sind in Alkanen + Alkenen",ok:0},{t:"c) Stärker als Ionenbindung",ok:0},{t:"d) So stark wie kovalente C-H-Bindungen",ok:0},{t:"e) Wasserstoff hat negative Teilladung",ok:0}]},
+{y:"2023 — Van-der-Waals",q:"Was trifft auf Van-der-Waals-Kräfte zu?",os:[{t:"a) Sie sind kovalente Bindungen",ok:0},{t:"b) Stärker als Wasserstoffbrücken",ok:0},{t:"c) Wirken auch über größere Entfernungen",ok:0},{t:"d) Salze bilden Van-der-Waals-Kräfte aus",ok:0},{t:"e) Verantwortlich für Siedepunkt von Alkanen",ok:1}]},
+{y:"2024 — Wasser",q:"Was trifft auf Wasser zu?",os:[{t:"a) Bildet sechs Wasserstoffbrückenbindungen aus",ok:0},{t:"b) Siedepunkt durch Wasserstoffbrücken bestimmt",ok:1},{t:"c) Ist ein unpolares Molekül",ok:0},{t:"d) Wasserstoffproton ist partiell negativ geladen",ok:0},{t:"e) H-Brücken sind kovalente Bindungen",ok:0}]},
+{y:"2025 — NaCl",q:"Welche Bindung liegt bei NaCl vor?",os:[{t:"a) Wasserstoffbrückenbindung",ok:0},{t:"b) Ionenbindung",ok:1},{t:"c) Van der Waals",ok:0},{t:"d) Metallbindung",ok:0},{t:"e) Elektronenpaarbindung",ok:0}]}],
+ps:["H in H-Brücken = δ+ (positiv, nicht negativ!)","Wasser = 4 H-Brücken (nicht 6!)","Van-der-Waals = auch in unpolaren Alkanen","NaCl = Ionenbindung (immer)"],
+tr:"<strong>Falle 'H partiell negativ':</strong> Das ist genau falsch — H ist durch O/N elektropositiv (δ+). Genau deswegen zieht es das freie Elektronenpaar des Akzeptors an. Diese Aussage taucht jedes Jahr als Distraktor auf."},
+
+{tag:"Aspirin (ASS) & Arzneimittel-pH",bg:"#FEE2E2",tc:"#7F1D1D",years:["2021","2022","2023"],
+mk:"Aspirin = Acetylsalicylsäure: <strong>Ester + Carbonsäure</strong> (kein Säureamid!). pKa ≈ 3,5 → im <strong>Blut (pH 7,4) praktisch vollständig deprotoniert</strong> (Anion, negativ geladen). Im <strong>Magen (pH ~2) protoniert</strong> → lipophil → gut membrangängig → Magenresorption. <strong>Thrombozytenaggregationshemmer</strong>.",
+vs:[
+{y:"2021",q:"Bild ASS: Was trifft auf Aspirin zu?",os:[{t:"a) Thrombozytenaggregationshemmend",ok:1},{t:"b) Enthält ein Säureamid",ok:0},{t:"c) Ist im Blut positiv geladen",ok:0},{t:"d) Ist im Sauren positiv geladen",ok:0},{t:"e) Unter physiologischen Bedingungen membrangängig",ok:0}]},
+{y:"2022",q:"Was trifft auf Aspirin zu?",os:[{t:"A) Löst sich gut im pH des Blutes",ok:1},{t:"B) Wird im Magen resorbiert",ok:0},{t:"C) Liegt im Darm protoniert vor",ok:0},{t:"D) Liegt im Magen deprotoniert vor",ok:0},{t:"E) Im sauren unprotoniert",ok:0}]},
+{y:"2023",q:"Was trifft auf Acetylsalicylsäure zu?",os:[{t:"a) Enthält ein Säureamid",ok:0},{t:"b) Ist im Blut überwiegend protoniert",ok:0},{t:"c) Ist gut membrangängig",ok:0},{t:"d) Ist ein Thrombozytenaggregationshemmer",ok:1},{t:"e) Ist im Sauren positiv geladen",ok:0}]}],
+ps:['"Enthält Säureamid" = immer falsch (hat Ester!)',"Im Blut = Anion (deprotoniert, negativ)","Im Magen = protoniert = membrangängig","Thrombozytenaggregationshemmer = immer richtig"],
+tr:"<strong>Protonierungslogik:</strong> pH 7,4 >> pKa 3,5 → über 99,99% deprotoniert im Blut = negativ geladen = Anion. 'Im Blut positiv geladen' = immer falsch. Im Magen pH ~2 < pKa 3,5 → protoniert → lipophil → membrangängig."},
+
+{tag:"Ampholyt & Säure-Base-Paare",bg:"#E0E7FF",tc:"#1E3A8A",years:["2021","2022","2023"],
+mk:"<strong>Ampholyt</strong>: kann H⁺ abgeben UND aufnehmen. Beispiele: HCO₃⁻, Aminosäuren, Al(OH)₃. <strong>Korrespondierendes Paar</strong>: genau <strong>1 H⁺ Unterschied</strong>. H₂CO₃/HCO₃⁻ ✓. H₂CO₃/CO₃²⁻ ✗ (2 H⁺ Unterschied!). H₂O/H₃O⁺ ✓. pKa + pKb = 14.",
+vs:[
+{y:"2021 — Korrespondierendes Paar",q:"Welche Stoffe ergeben ein korrespondierendes Säure-Base-Paar?",os:[{t:"a) H₂CO₃ und H₂O",ok:0},{t:"b) H₂CO₃ und CO₃²⁻",ok:0},{t:"c) H₂O und H₃O⁺",ok:1},{t:"d) H₂O und H₃O⁻",ok:0}]},
+{y:"2022 — Ampholyt",q:"Was ist ein Ampholyt?",os:[{t:"A) CH₃COOH (nur Säure)",ok:0},{t:"B) CH₃COO⁻ (nur Base)",ok:0},{t:"C) Al(OH)₃(H₂O)₃ (H⁺ aufnehmen und abgeben)",ok:1},{t:"D) Ca(OH)₂ (nur Base)",ok:0},{t:"E) Ca(PO₄)₅OH",ok:0}]},
+{y:"2023 — Ampholyt",q:"Welche der Verbindungen ist ein Ampholyt?",os:[{t:"a) HCO₃⁻",ok:1},{t:"b) NH₄⁺ (nur Säure)",ok:0},{t:"c) H₃PO₄ (nur Säure)",ok:0},{t:"d) HCl (starke Säure)",ok:0},{t:"e) CH₃COOH (nur Säure)",ok:0}]},
+{y:"Rechenbeispiel",q:"pKb von Cl⁻ berechnen, wenn pKa(HCl) = −6?",os:[{t:"pKb = 14 − pKa = 14 − (−6) = 20 ✓",ok:1}]}],
+ps:["Ampholyt = mind. 2 ionisierbare Gruppen","Korrespondierendes Paar = genau 1 H⁺ Unterschied","HCO₃⁻ = klassischer Ampholyt (2023 Antwort)","pKa + pKb = 14"],
+tr:"<strong>Häufige Verwechslung:</strong> H₂CO₃/CO₃²⁻ = KEIN korrespondierendes Paar (Unterschied = 2 H⁺). H₂CO₃/HCO₃⁻ und HCO₃⁻/CO₃²⁻ sind jeweils separate korrespondierende Paare. Der Unterschied muss genau 1 H⁺ betragen."},
+
+{tag:"Methanolvergiftung",bg:"#FEE2E2",tc:"#7F1D1D",years:["2022","2023"],
+mk:"Methanol → (ADH) → <strong>Formaldehyd</strong> → (ALDH) → <strong>Ameisensäure</strong>. <strong>Ameisensäure</strong> verursacht <strong>metabolische Azidose</strong> + schädigt <strong>Sehnerv</strong> (Erblindung!). Formaldehyd akkumuliert <strong>nicht</strong>. Antidot: <strong>Ethanol</strong> (kompetitive ADH-Hemmung). Nicht: Fettleber (chronischer Alkohol).",
+vs:[
+{y:"2022",q:"Warum ist Methanol giftig?",os:[{t:"a) Formaldehyd wird oxidiert und akkumuliert im Körper",ok:0},{t:"b) Wird zum Acetaldehyd oxidiert",ok:0},{t:"c) Inhibiert die Alkoholdehydrogenase",ok:0},{t:"d) Wird zu Ameisensäure oxidiert → metabolische Azidose",ok:1},{t:"e) Begünstigt die Entstehung einer Fettleber",ok:0}]},
+{y:"2023",q:"Warum ist eine Methanolvergiftung gefährlich?",os:[{t:"a) Formaldehyd reichert sich im Körper an",ok:0},{t:"b) Essigsäure schädigt den Sehnerv",ok:0},{t:"c) Entstehende Ameisensäure → metabolische Azidose",ok:1},{t:"d) Alkoholdehydrogenase wird inhibiert",ok:0},{t:"e) Begünstigt Entstehung einer Fettleber",ok:0}]},
+{y:"Abbauweg",q:"Kette merken:",os:[{t:"Methanol → Formaldehyd → Ameisensäure → Azidose + Sehnerv",ok:1}]},
+{y:"Antidot",q:"Wie wird Methanolvergiftung behandelt?",os:[{t:"Ethanol (hemmt ADH kompetitiv → weniger Ameisensäure gebildet)",ok:1}]}],
+ps:["Ameisensäure = Hauptgift (nicht Formaldehyd)","Sehnerv geschädigt (nicht primär Leber)","Metabolische Azidose durch Ameisensäure","Antidot = Ethanol (kompetitive Hemmung)"],
+tr:"<strong>Falle 'Formaldehyd akkumuliert':</strong> Formaldehyd wird schnell zu Ameisensäure oxidiert. Die Ameisensäure ist das eigentlich toxische Endprodukt. Option 'Formaldehyd reichert sich an' = immer falsch."},
+
+{tag:"Bindungstypen & Röntgenkontrastierung",bg:"#F3F4F6",tc:"#1F2937",years:["2022","2023","2024","2025"],
+mk:"<strong>Ionenbindung</strong>: Kation + Anion im Gitter, elektrostatisch, nicht gerichtet. <strong>Metallbindung</strong>: freies Elektronengas. <strong>Kovalente Bindung</strong>: geteiltes Elektronenpaar, gerichtet. Röntgen: höhere <strong>Ordnungszahl</strong> = mehr Elektronen = stärkere Absorption → Metall erscheint hell vs. Gewebe (C,H,O,N haben niedrige OZ).",
+vs:[
+{y:"2022 — Ionenbindung",q:"Was trifft auf Ionenbindungen zu?",os:[{t:"a) Anionen und Kationen bilden Gitter",ok:1},{t:"b) Durch freies Elektronengas stabilisiert",ok:0},{t:"c) Anionen können leichter wandern",ok:0},{t:"d) Werden auch Elektronenpaarbindung genannt",ok:0},{t:"e) Sind gerichtet",ok:0}]},
+{y:"2023 — Röntgen Nierensteine",q:"Wieso sind Nierensteine im Röntgen kontrastreicher als umliegendes Gewebe?",os:[{t:"a) Kationen haben mehr Valenzelektronen",ok:0},{t:"b) Ionenbindungen absorbieren Röntgen besser",ok:0},{t:"c) Enthaltene Atome haben höhere Ordnungszahl",ok:1},{t:"d) Atome besitzen größeren Atomradius",ok:0},{t:"e) Absorbieren Röntgenkontrastmittel besser",ok:0}]},
+{y:"2025 — Röntgen Metall",q:"Bild von Zahn-Röntgen mit Metallteilen: Warum ist Metall besser sichtbar?",os:[{t:"a) Wird durch Metall reflektiert",ok:0},{t:"b) Höhere Massenzahl (mehr e⁻ → stärkere Absorption)",ok:1},{t:"c) Mit Röntgenkontrastmittel versetzt",ok:0},{t:"d) Besitzt kleineren Atomdurchmesser",ok:0},{t:"e) Besitzt kleinere Ordnungszahl",ok:0}]},
+{y:"2025 — NaCl",q:"Welche Bindung liegt bei NaCl vor?",os:[{t:"a) Wasserstoffbrückenbindung",ok:0},{t:"b) Ionenbindung",ok:1},{t:"c) Van der Waals",ok:0},{t:"d) Metallbindung",ok:0},{t:"e) Elektronenpaarbindung",ok:0}]}],
+ps:["NaCl = Ionenbindung (immer)","Röntgen: höhere OZ/Massenzahl = besser sichtbar","Metallbindung = Elektronengas (nicht Ionengitter)","Ionenbindung = nicht gerichtet"],
+tr:"<strong>Röntgen-Logik:</strong> Höhere Ordnungszahl = mehr Elektronen = stärkere Röntgenabsorption. Metall (Fe, Zn, Au: hohe OZ) absorbiert viel mehr als Gewebe (C,H,O,N: niedrige OZ) → erscheint hell im Bild. 'Wird reflektiert' = physikalisch falsch."}
+],
+
+4:[
+{tag:"Aromatische vs. aliphatische Amine",bg:"#FEF3C7",tc:"#78350F",years:["2025","2022"],
+mk:"<strong>Aromatische Amine</strong> (z.B. Anilin) sind <strong>weniger basisch</strong> als aliphatische (z.B. Cyclohexylamin), weil das freie Elektronenpaar am N ins π-System des Benzolrings delokalisiert wird → steht weniger für H⁺-Aufnahme zur Verfügung. <strong>Aliphatisches Amin = stärker basisch</strong>. Benzolring ist eben (sp² hybridisiert). Anilin = primäres Amin (NH₂ direkt am Ring). Cyclohexylamin = primäres Amin (NH₂ an gesättigtem Ring).",
+vs:[
+{y:"2025 Q23",q:"Was trifft zu? (Anilin = 1, Cyclohexylamin = 2)",os:[{t:"a) (1) Anilin ist ein sekundäres Amin",ok:0},{t:"b) (2) Cyclohexylamin ist basischer als (1) Anilin",ok:1},{t:"c) Beides sind aromatische Amine",ok:0},{t:"d) Sie sind Strukturisomere",ok:0},{t:"e) Beide zeigen mesomere Grenzstrukturen",ok:1},{t:"f) Beide Ringsysteme sind eben im Raum",ok:0}]},
+{y:"Merke — Basizität",q:"Warum ist Cyclohexylamin basischer als Anilin?",os:[{t:"Cyclohexylamins N-Elektronenpaar ist frei verfügbar (kein Ring-π)",ok:1},{t:"Anilins N-Elektronenpaar ist ins aromatische π-System delokalisiert → gebunden",ok:1}]},
+{y:"Merke — Primär/Sekundär",q:"Ist Anilin ein primäres oder sekundäres Amin?",os:[{t:"Primäres Amin: N hat 2× H und 1× C-Substituent (Phenyl)",ok:1},{t:"Sekundäres Amin wäre: N hat 1× H und 2× C-Substituenten",ok:0}]},
+{y:"Verwandte Fragen LA",q:"Warum sind LA-Moleküle oft tertiäre Amine?",os:[{t:"Tertiäres Amin: kein H am N → kein H-Donor, aber dennoch basisch (lone pair)",ok:1},{t:"Primäres Amin: 2× H, stärker basisch aber schlechter membrangängig",ok:0}]}],
+ps:["Aromat am N = Elektronenpaar delokalisiert = WENIGER basisch","Aliphatisches Amin = MEHR basisch","Anilin = primär (NH₂ direkt am Benzol)","Cyclohexylamin = primär (NH₂ an Cyclohexan)"],
+tr:"<strong>Falle 'Beides aromatisch':</strong> Cyclohexylamin hat einen gesättigten Ring — kein Aromat! Nur Anilin hat einen aromatischen Ring. Außerdem ist Anilin ein primäres Amin (NH₂, nicht NH) — wird oft als sekundär verwechselt, weil der Ring wie ein Substituent aussieht. Aber der Ring ist C-substituent, nicht N-substituent."},
+
+{tag:"Carbonsäuren: Eigenschaften",bg:"#FEF3C7",tc:"#78350F",years:["2023","2024","2022"],
+mk:"Carbonsäuren bilden <strong>untereinander H-Brücken</strong> (OH-Donor + C=O-Akzeptor) → höherer Sdp. als Ketone/Aldehyde. Sie sind <strong>sauer wegen Mesomeriestabilisierung</strong> des Carboxylat-Anions (negative Ladung über beide O delokalisiert). Fettlöslichkeit nimmt mit Kettenlänge zu. <strong>Fehling negativ</strong> (keine Aldehydgruppe). Alkohol&lt;Wasser &lt; Carbonsäure in Säurestärke.",
+vs:[
+{y:"2023 Q29",q:"Was trifft auf alle Carbonsäuren zu?",os:[{t:"a) Ab 10 C-Atomen werden sie als Fette bezeichnet",ok:0},{t:"b) Wegen Mesomeriestabilisierung sind sie sauer",ok:1},{t:"c) Reagieren alle Fehling positiv",ok:0},{t:"d) Bei langer Kette trotzdem wasserlöslich",ok:0},{t:"e) Alkohole sind saurer als Carbonsäuren",ok:0}]},
+{y:"2024 Q30",q:"Was trifft auf Carbonsäuren zu?",os:[{t:"a) Bilden untereinander H-Brückenbindungen aus",ok:1},{t:"b) Ab 10 C-Atomen sind es Fette",ok:0},{t:"c) SP³-hybridisiert",ok:0},{t:"d) Können aus sekundären Alkoholen oxidiert werden",ok:0}]},
+{y:"Merke — Mesomerie",q:"Warum macht Mesomerie Carbonsäuren sauer?",os:[{t:"Nach H⁺-Abgabe: negative Ladung auf zwei O verteilt → Carboxylat stabilisiert",ok:1},{t:"Alkohole: O⁻ nicht mesomeriestabilisiert → Alkohol viel weniger sauer",ok:1}]},
+{y:"Merke — H-Brücken",q:"Warum haben Carbonsäuren höheren Sdp. als Aldehyde?",os:[{t:"Carbonsäure: OH-Donor + C=O-Akzeptor → starke H-Brücken untereinander",ok:1},{t:"Aldehyd: nur C=O (Akzeptor), kein OH-Donor → keine H-Brücken untereinander",ok:1}]}],
+ps:["Mesomerie → Carboxylat stabilisiert → sauer","H-Brücken untereinander: ja (OH-Donor)","Fehling negativ (keine Aldehydgruppe)","Alkohole WENIGER sauer als Carbonsäuren","Fette = Ester aus Glycerol + Fettsäuren (nicht Carbonsäure selbst)"],
+tr:"<strong>Falle 'Ab 10 C = Fett':</strong> Fette sind Triglyceride (Ester aus Glycerol + 3 Fettsäuren), nicht die Fettsäure selbst. Eine C₁₆-Fettsäure ist eine Carbonsäure, kein Fett. Außerdem: Carbonsäuren können Alkohole nicht direkt oxidieren — das geht umgekehrt (Alkohol → Carbonsäure). 'Aus sekundären Alkoholen oxidiert' = immer falsch (das ergibt Ketone!)."},
+
+{tag:"CO₂ / HCO₃⁻ Atemgleichgewicht",bg:"#FEF3C7",tc:"#78350F",years:["2024","2023","2022"],
+mk:"<strong>CO₂ + H₂O ⇌ H₂CO₃ ⇌ HCO₃⁻ + H⁺</strong><br>CO₂ ↑ → GG nach rechts → H⁺ ↑ → <strong>respiratorische Azidose</strong>. CO₂ ↓ (Hyperventilation) → GG nach links → H⁺ ↓ → <strong>respiratorische Alkalose</strong>. <strong>Atemdepression</strong> → weniger CO₂ abgeatmet → CO₂ steigt → Azidose. HCO₃⁻ ist gut wasserlöslich → wird über Blut transportiert und abgeatmet.",
+vs:[
+{y:"2023 Q2",q:"Wodurch entsteht eine respiratorische Azidose?",os:[{t:"a) CO-Vergiftung",ok:0},{t:"b) Methanolvergiftung",ok:0},{t:"c) Atemdepression",ok:1},{t:"d) Hyperventilation",ok:0},{t:"e) Geringerer O₂-Gehalt in der Luft",ok:0}]},
+{y:"2024 Q37",q:"Atemgleichung und ihre Beeinflussung: Was trifft zu?",os:[{t:"a) Bei hoher CO₂-Konz. verschiebt GG nach rechts",ok:1},{t:"b) Im Alkalischen ist HCO₃⁻ gut löslich",ok:1},{t:"c) Im Sauren wird CO₂-Abgabe erschwert",ok:0},{t:"d) Im Alkalischen verschiebt GG nach links",ok:0}]},
+{y:"2024 Q21",q:"CO₂ bei Darmspiegelung statt Luft: Welcher Vorteil?",os:[{t:"a) CO₂ kleiner → diffundiert besser durch Darmwand",ok:0},{t:"b) Bildet GG mit HCO₃⁻, das gut wasserlöslich ist",ok:1},{t:"c) CO₂ wirkt narkotisierend",ok:0},{t:"d) Fällt als CaCO₃ aus",ok:0},{t:"e) Weniger Mengen nötig",ok:0}]},
+{y:"Merke — Azidose vs. Alkalose",q:"Hyperventilation → was passiert?",os:[{t:"CO₂ ↓ (abgeatmet) → GG nach links → H⁺ ↓ → Alkalose (NICHT Azidose!)",ok:1},{t:"Atemdepression → CO₂ ↑ → H⁺ ↑ → Azidose",ok:1}]}],
+ps:["Atemdepression → CO₂↑ → Azidose","Hyperventilation → CO₂↓ → Alkalose (umgekehrt!)","HCO₃⁻ gut wasserlöslich → Puffersystem des Blutes","CO₂ in Darm → löst sich als HCO₃⁻ → wird resorbiert → keine Blähungen"],
+tr:"<strong>Atemdepression ≠ Hyperventilation:</strong> Atemdepression = zu langsames Atmen → CO₂ bleibt im Blut → Azidose. Hyperventilation = zu schnelles Atmen → zu viel CO₂ abgeatmet → Alkalose. Diese werden häufig verwechselt. Eselsbrücke: Depression (zu wenig) → CO₂ zu viel → Azidose."},
+
+{tag:"Harnstoff Hydrolyse",bg:"#D1FAE5",tc:"#065f46",years:["2023"],
+mk:"Harnstoff (H₂N-CO-NH₂): enthält eine <strong>Amidbindung</strong> (kein Peptid — Peptidbindung verbindet Aminosäuren!). Wird durch Urease zu <strong>CO₂ + NH₃</strong> hydrolysiert. NH₃ kann dann zu Harnstoff-Zyklus-Produkten weiterverarbeitet werden. Harnstoff ist <strong>gut wasserlöslich</strong> und reagiert leicht <strong>basisch</strong> (NH₃-Freisetzung). Ist <strong>keine Aminosäure</strong> (kein chirales C, kein α-C mit NH₂ und COOH).",
+vs:[
+{y:"2023 Q37",q:"Welche Aussage zu dem abgebildeten Harnstoff (H₂N-CO-NH₂) trifft zu?",os:[{t:"a) Im Sauren schlecht wasserlöslich",ok:0},{t:"b) Reagiert in wässrigen Lösungen basisch",ok:0},{t:"c) Hat eine Peptidbindung",ok:0},{t:"d) Wird zu CO₂ und Ammoniak hydrolysiert",ok:1},{t:"e) Ist eine Aminosäure",ok:0}]},
+{y:"Merke — Amid vs. Peptid",q:"Was ist der Unterschied zwischen Amidbindung und Peptidbindung?",os:[{t:"Amidbindung = R-CO-NH-R' (allgemein, z.B. Harnstoff, Acetamid)",ok:1},{t:"Peptidbindung = spezielle Amidbindung zwischen α-COOH und α-NH₂ einer AS",ok:1}]},
+{y:"Merke — Produkte",q:"Harnstoff + H₂O → ?",os:[{t:"CO₂ + 2 NH₃ (durch Urease katalysiert)",ok:1},{t:"NICHT: CO₂ + H₂O + NH₄⁺ allein",ok:0}]}],
+ps:["Harnstoff → CO₂ + NH₃ (Urease)","Enthält Amid, KEINE Peptidbindung","Gut wasserlöslich, nicht sauer","Keine Aminosäure (kein α-C mit NH₂ und COOH gleichzeitig)"],
+tr:"<strong>Falle 'Peptidbindung':</strong> Harnstoff hat eine Amidbindung (C=O mit zwei NH₂-Gruppen), aber KEINE Peptidbindung. Peptidbindungen verbinden spezifisch Aminosäuren über deren α-COOH und α-NH₂. Harnstoff hat keine Carboxylgruppe."},
+
+{tag:"Diffusion",bg:"#D1FAE5",tc:"#065f46",years:["2022"],
+mk:"Diffusion = <strong>ungerichtete Wärmebewegung</strong> der Teilchen (Brown'sche Bewegung) → baut <strong>Konzentrationsgradient ab</strong>. Passiver Prozess, braucht <strong>keine Membran</strong> (das wäre Osmose) und <strong>keine Energie</strong>. Treibende Kraft = Entropie<strong>zunahme</strong> (nicht -abbau!). Osmose = Diffusion von Wasser durch semipermeable Membran.",
+vs:[
+{y:"2022 Q19",q:"Was trifft auf Diffusion zu?",os:[{t:"a) Ungerichtete Wärmebewegung der Teilchen",ok:1},{t:"b) Es wird immer ein Konzentrationsunterschied abgebaut",ok:1},{t:"c) Semipermeable Membran nötig",ok:0},{t:"d) Ist ein aktiver Transport",ok:0},{t:"e) Treibende Kraft ist Abbau der Entropie",ok:0}]},
+{y:"Merke — Diffusion vs. Osmose",q:"Was ist der Unterschied?",os:[{t:"Diffusion: Teilchen wandern von hoch nach niedrig konzentriert (keine Membran nötig)",ok:1},{t:"Osmose: Wasser wandert durch semipermeable Membran zur höheren Konzentration",ok:1}]},
+{y:"Merke — Aktiv vs. Passiv",q:"Ist Diffusion aktiv oder passiv?",os:[{t:"Passiv (kein ATP nötig) — folgt dem Konzentrationsgradienten",ok:1},{t:"Aktiver Transport: gegen den Gradienten, braucht Energie (ATP)",ok:0}]}],
+ps:["Ungerichtete Wärmebewegung = Diffusion","Keine Membran nötig (das wäre Osmose)","Passiv: kein Energieverbrauch","Treibende Kraft = Entropiezunahme (nicht -abbau)"],
+tr:"<strong>Falle 'Entropie-Abbau':</strong> Diffusion erhöht die Entropie (Unordnung nimmt zu, wenn Konz.-Unterschiede ausgeglichen werden). 'Abbau der Entropie' wäre das Gegenteil — das würde Energie erfordern. Entropie-Zunahme = spontan = treibende Kraft."},
+
+{tag:"Seifen (neutrale Seifen)",bg:"#D1FAE5",tc:"#065f46",years:["2022"],
+mk:"Seifen = <strong>Natriumsalze</strong> (oder Kaliumsalze) der Fettsäuren — entstehen durch Verseifung (Ester + NaOH → Fettsäuresalz + Glycerol). pH klassischer Seifen liegt <strong>über 7</strong> (basisch). Haben <strong>hydrophoben Schwanz + hydrophilen Kopf</strong> (amphiphil) → bilden Mizellen. <strong>Erdalkalisalze</strong> (Ca²⁺, Mg²⁺) der Fettsäuren = unlöslich = Kalkseife. Seifen ≠ Phospholipide (andere Kopfgruppe).",
+vs:[
+{y:"2022 Q32",q:"Was trifft auf neutrale Seifen zu?",os:[{t:"a) Haben hydrophoben und hydrophilen Teil",ok:1},{t:"b) pH klassischer Seifen liegt unter 7",ok:0},{t:"c) Mit Glycerin veresterte Fettsäuren",ok:0},{t:"d) Bausteine von Biomembranen",ok:0},{t:"e) Sind die Erdalkalisalze der Fettsäuren",ok:0}]},
+{y:"Merke — Aufbau",q:"Woraus bestehen Seifen?",os:[{t:"Natriumsalz der Fettsäure: Fettsäure-COO⁻ Na⁺",ok:1},{t:"NICHT Glycerolester (das wären Fette/Triglyceride)",ok:1}]},
+{y:"Merke — Kalkseife",q:"Was passiert mit Seife in hartem Wasser?",os:[{t:"Ca²⁺/Mg²⁺ + Fettsäuresalz → unlösliche Kalkseife (Erdalkalisalz) → schäumt nicht",ok:1}]}],
+ps:["Seifen = Natriumsalze der Fettsäuren","pH > 7 (basisch durch Hydrolyse)","Erdalkalisalze = Kalkseife (unlöslich) = falsch als Seife","Amphiphil: Kopf hydrophil, Schwanz hydrophob","Keine Phospholipide (andere Struktur)"],
+tr:"<strong>Falle 'Erdalkalisalze':</strong> Normale (lösliche) Seifen sind Natrium- oder Kaliumsalze. Calcium- und Magnesiumsalze (Erdalkali) sind unlöslich und bilden den unerwünschten 'Kalkseifenring' in der Badewanne. Option 'Erdalkalisalze der Fettsäuren' = immer falsch für normale Seifen."},
+
+{tag:"Löslichkeitsprodukt & Nierensteine",bg:"#D1FAE5",tc:"#065f46",years:["2022"],
+mk:"Nierensteine entstehen wenn das <strong>Löslichkeitsprodukt KL überschritten</strong> wird — d.h. wenn [Kation]×[Anion] &gt; KL. Das Fällungsgleichgewicht kann durch <strong>Verringern einer Ionensorte</strong> in Richtung Auflösen verschoben werden (Le Chatelier). Erhöhen einer Ionensorte → mehr Ausfall. Ernährung beeinflusst Ionenkonzentrationen stark.",
+vs:[
+{y:"2022 Q35",q:"Was trifft auf Nierensteine zu?",os:[{t:"a) Können verhindert werden wenn weniger aller Ionensorten",ok:0},{t:"b) Entstehen wenn Löslichkeitsprodukt erreicht/überschritten ist",ok:1},{t:"c) Werden nicht durch Ernährung beeinflusst",ok:0},{t:"d) Können aufgelöst werden wenn man eine Ionensorte hinzugibt",ok:0},{t:"e) Treten vor allem bei Säuglingen auf",ok:0}]},
+{y:"Merke — Le Chatelier",q:"Wie kann man Nierensteine auflösen?",os:[{t:"Eine Ionensorte VERRINGERN → GG nach rechts (Auflösung) → Kristall löst sich",ok:1},{t:"Eine Ionensorte HINZUGEBEN → GG nach links → mehr Kristallbildung (falsch!)",ok:0}]},
+{y:"Merke — Formel",q:"Wann fällt CaC₂O₄ aus?",os:[{t:"Wenn [Ca²⁺] × [C₂O₄²⁻] > KL(CaC₂O₄) → Niederschlag",ok:1}]}],
+ps:["KL überschritten → Ausfällung → Stein","Ionensorte verringern → Auflösung (nicht erhöhen!)","Ernährung hat Einfluss (Oxalat, Calciumzufuhr)","Tritt eher bei Erwachsenen auf (nicht Säuglingen)"],
+tr:"<strong>Falle 'Ionensorte hinzugeben':</strong> Wenn man eine der beteiligten Ionensorten hinzugibt, verschiebt sich das GG zur Seite der Fällung → mehr Stein, nicht weniger. Auflösung = eine Ionensorte entfernen (z.B. durch Trinken von viel Wasser = Verdünnung aller Ionen)."},
+
+{tag:"LA-Behandlung bei Entzündung",bg:"#EDE9FE",tc:"#4C1D95",years:["2023"],
+mk:"Wenn LA im entzündeten Gewebe nicht wirkt (pH ↓ → LA protoniert → kein Membrandurchtritt): <strong>1) Besseres LA</strong> mit pKa näher an 7,4 → mehr freie Base. <strong>2) Vollnarkose</strong> umgeht das Problem komplett. <strong>3) NaOH ins Gewebe</strong> → pH ↑ → mehr freie Base → bessere Wirkung. <strong>Regionalanästhesie</strong> (außerhalb des entzündeten Bereichs) = gut. Ohne Betäubung = immer schlechte Idee.",
+vs:[
+{y:"2023 Q19",q:"Wie kann die Wunde dennoch behandelt werden? (gute Idee / schlechte Idee)",os:[{t:"a) Besseres LA verwenden — gute Idee",ok:1},{t:"b) Regionalanästhesie — gute Idee (außerhalb des Entz.gebiets)",ok:1},{t:"c) Vollnarkose — gute Idee",ok:1},{t:"d) Ohne Betäubung nähen — schlechte Idee",ok:0},{t:"e) Schwache NaOH ins Gewebe → pH ↑ → gute Idee",ok:1}]},
+{y:"Merke — Warum NaOH hilft",q:"Wie wirkt NaOH-Injektion ins Gewebe?",os:[{t:"NaOH → pH ↑ im Gewebe → LA deprotoniert (freie Base) → membrangängig → wirkt",ok:1}]},
+{y:"Merke — Regionalanästhesie",q:"Warum funktioniert Regionalanästhesie?",os:[{t:"Injektion weit weg vom entzündeten Gewebe → normaler pH → LA wirkt normal",ok:1},{t:"Blockiert Nerv bevor er ins entzündete Gebiet zieht",ok:1}]}],
+ps:["NaOH ins Gewebe = gute Idee (pH ↑ → freie Base ↑)","Regionalanästhesie außerhalb Entzündung = gute Idee","Vollnarkose = gute Idee (umgeht das Problem)","Ohne Betäubung nähen = immer schlechte Idee"],
+tr:"<strong>Achtung Regionalanästhesie:</strong> Im Antwortschlüssel 2023 war die Einordnung teils umstritten. Regionalanästhesie bedeutet Injektion <em>außerhalb</em> des Entzündungsbereichs (z.B. am Nervenstamm) → pH dort normal → funktioniert. Das ist eine GUTE Idee. Verwechsle das nicht mit nochmals lokaler Injektion direkt ins entzündete Gewebe."},
+
+{tag:"Ligandenaustausch in Komplexen",bg:"#EDE9FE",tc:"#4C1D95",years:["2022"],
+mk:"<strong>[Fe(SCN)₃(H₂O)₃] + 6F⁻ → [FeF₆]³⁻ + 3SCN⁻ + 3H₂O</strong>. Eisen bleibt <strong>Fe³⁺</strong> (OZ ändert sich nicht). KZ bleibt 6. Eisen links ist dreifach positiv geladen (3+). F⁻ ist ein stärkerer Ligand als SCN⁻ oder H₂O → verdrängt sie. Komplex rechts [FeF₆]³⁻ ist <strong>kein Chelat</strong> (F⁻ = einzähnig). Die Reaktion ist nicht pH-abhängig.",
+vs:[
+{y:"2022 Q18",q:"[Fe(SCN)₃(H₂O)₃] + 6F⁻ → [FeF₆]³⁻ + … Was trifft zu?",os:[{t:"a) Die Reaktion ist pH-abhängig",ok:0},{t:"b) Eisen ändert seine Oxidationszahl",ok:0},{t:"c) Eisen ändert seine Koordinationszahl",ok:0},{t:"d) Das Eisen links ist dreifach positiv geladen",ok:1},{t:"e) Der Komplex rechts ist ein Chelatkomplex",ok:0}]},
+{y:"Merke — Was sich ändert / nicht ändert",q:"Was ändert sich beim Ligandenaustausch?",os:[{t:"Ändert sich: die Liganden (SCN⁻/H₂O → F⁻), die Farbe des Komplexes",ok:1},{t:"Ändert sich NICHT: OZ von Fe (bleibt +3), KZ (bleibt 6)",ok:1}]},
+{y:"Merke — Chelat?",q:"Warum ist [FeF₆]³⁻ kein Chelat?",os:[{t:"F⁻ ist einzähnig (nur 1 Donoratom) → kein Ringschluss → kein Chelat",ok:1}]}],
+ps:["OZ von Fe ändert sich NICHT (bleibt +3)","KZ bleibt 6 (links 3+3, rechts 6×F⁻)","[FeF₆]³⁻ = kein Chelat (F⁻ einzähnig)","Eisen links = Fe³⁺ = dreifach positiv"],
+tr:"<strong>Falle 'OZ ändert sich':</strong> Bei reinem Ligandenaustausch ändert sich die Oxidationszahl des Zentralatoms nie — das wäre eine Redoxreaktion. Hier werden nur die Liganden ausgetauscht (SCN⁻ und H₂O gegen F⁻). Fe bleibt Fe³⁺ auf beiden Seiten der Gleichung."}
+]};
+
+let block=1, cur=0;
+
+function switchBlock(b){
+  block=b; cur=0;
+  [1,2,3,4,5,6,7].forEach(i=>{const t=document.getElementById('tab'+i);if(t)t.classList.toggle('active',i===b)});
+  const isStatic=[5,6,7].includes(b);
+  ['pv','nx','ni'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=isStatic?'none':'';});
+  const nr=document.querySelector('.nav-row');if(nr)nr.style.display=isStatic?'none':'flex';
+  const dotsEl=document.getElementById('dots');if(dotsEl)dotsEl.style.display=isStatic?'none':'flex';
+  const ca=document.getElementById('ca');if(ca)ca.style.display=isStatic?'none':'block';
+  [5,6,7].forEach(i=>{const p=document.getElementById('sp'+i);if(p)p.classList.toggle('show',i===b)});
+  if(!isStatic){buildDots();render();}
+}
+function go(d){ cur=Math.max(0,Math.min(B[block].length-1,cur+d)); render(); }
+function buildDots(){
+  const de=document.getElementById('dots'); de.innerHTML='';
+  B[block].forEach((_,i)=>{
+    const d=document.createElement('div'); d.className='dot';
+    d.onclick=()=>{cur=i;render();}; de.appendChild(d);
+  });
+}
+function render(){
+  const T=B[block], t=T[cur];
+  document.getElementById('ni').textContent=`${cur+1} von ${T.length}`;
+  document.getElementById('pv').disabled=cur===0;
+  document.getElementById('nx').disabled=cur===T.length-1;
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i===cur));
+  const bl={1:'Block 1 — jedes Jahr (2021–2025)',2:'Block 2 — 3–4 von 5 Jahren',3:'Block 3 — 1–2 von 5 Jahren',4:'Block 4 — Lücken (fehlende Themen)'}[block];
+  const bc={1:'b1',2:'b2',3:'b3',4:'b4'}[block];
+  const vH=t.vs.map(v=>`
+    <div class="vc">
+      <div class="vy">${v.y}</div>
+      <div class="vq">„${v.q}"</div>
+      ${v.os.map(o=>`<div class="opt ${o.ok?'ok':'no'}"><span class="opt-l">${o.ok?'✓':'✗'}</span><span>${o.t}</span></div>`).join('')}
+    </div>`).join('');
+  const pH=t.ps.map(p=>`<span class="ptag">${p}</span>`).join('');
+  document.getElementById('ca').innerHTML=`
+    <span class="block-badge ${bc}">${bl}</span>
+    <div class="card">
+      <div class="card-top">
+        <span class="topic-badge" style="background:${t.bg};color:${t.tc}">${t.tag}</span>
+        <div class="years">${t.years.map(y=>`<span class="ytag">${y}</span>`).join('')}</div>
+      </div>
+      <div class="sl">Kernprinzip — reicht für alle Variationen</div>
+      <div class="merksatz">${t.mk}</div>
+      <div class="sl">Wie die Frage je nach Jahr variiert — alle Antwortoptionen</div>
+      <div class="var-grid">${vH}</div>
+      <div class="sl">Wiederkehrende Distraktoren</div>
+      <div class="patterns">${pH}</div>
+      <div class="trap"><strong>Falle:</strong> ${t.tr}</div>
+    </div>`;
+}
+buildDots(); render();
+</script>
+</body>
+</html>
